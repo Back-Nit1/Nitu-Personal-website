@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# the build brief, kept out of the public repo
+prompt*.md
+
+# development indexes and graph reports
+graphify-out
+.claude/codemunch
+.codemunch
