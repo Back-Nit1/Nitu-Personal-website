@@ -1,0 +1,119 @@
+import { useCallback, useEffect, useState, useSyncExternalStore, type RefObject } from 'react'
+import { resolve, routeOf } from '../content/index.ts'
+
+// --- Hash routing ---
+
+/** `index` and `missing` are reading views that leave the graph at the whole network. */
+export type Route = { id: string; view: 'node' | 'index' | 'missing' }
+
+function parse(hash: string): Route {
+  if (/^#\/index\/?$/.test(hash)) return { id: 'root', view: 'index' }
+  const id = resolve(hash)
+  return id ? { id, view: 'node' } : { id: 'root', view: 'missing' }
+}
+
+const depth = (): number => history.state?.d ?? 0
+
+/**
+ * Current route plus how many in-site steps lie behind it. Depth rides on
+ * history.state, so it survives refresh and stays right across Back and Forward.
+ */
+export function useRoute(): Route & { depth: number } {
+  const [hash, setHash] = useState(location.hash)
+
+  useEffect(() => {
+    if (history.state?.d == null) history.replaceState({ d: 0 }, '')
+    let last = depth()
+    const onChange = () => {
+      // A fresh navigation arrives with empty state; Back and Forward bring theirs along.
+      if (history.state?.d == null) history.replaceState({ d: last + 1 }, '')
+      last = depth()
+      setHash(location.hash)
+    }
+    addEventListener('hashchange', onChange)
+    return () => removeEventListener('hashchange', onChange)
+  }, [])
+
+  const route = parse(hash)
+
+  // One canonical URL per entry: `#/nomos` becomes `#/projects/autonomy/nomos`.
+  useEffect(() => {
+    if (route.view === 'node' && location.hash && location.hash !== routeOf(route.id))
+      history.replaceState(history.state, '', routeOf(route.id))
+  }, [route.view, route.id])
+
+  return { ...route, depth: depth() }
+}
+
+// --- Appearance ---
+
+type Theme = 'light' | 'dark'
+const dark = matchMedia('(prefers-color-scheme: dark)')
+
+function stored(): Theme | null {
+  try {
+    const t = localStorage.getItem('theme')
+    return t === 'light' || t === 'dark' ? t : null
+  } catch {
+    return null
+  }
+}
+
+/** Follows the system until the visitor chooses; then remembers the choice. */
+export function useTheme(): [Theme, () => void] {
+  const [theme, setTheme] = useState<Theme>(() => stored() ?? (dark.matches ? 'dark' : 'light'))
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  useEffect(() => {
+    const onSystem = () => stored() ?? setTheme(dark.matches ? 'dark' : 'light')
+    dark.addEventListener('change', onSystem)
+    return () => dark.removeEventListener('change', onSystem)
+  }, [])
+
+  const toggle = useCallback(() => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem('theme', next)
+      } catch {
+        // Private mode: the choice lasts for this visit.
+      }
+      return next
+    })
+  }, [])
+
+  return [theme, toggle]
+}
+
+// --- Measurement ---
+
+export function useMedia(query: string): boolean {
+  const subscribe = useCallback(
+    (cb: () => void) => {
+      const m = matchMedia(query)
+      m.addEventListener('change', cb)
+      return () => m.removeEventListener('change', cb)
+    },
+    [query],
+  )
+  return useSyncExternalStore(subscribe, () => matchMedia(query).matches)
+}
+
+/** Element size, kept current through resizes and orientation changes. */
+export function useSize(ref: RefObject<HTMLElement | null>): { w: number; h: number } {
+  const [size, setSize] = useState({ w: 0, h: 0 })
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const ro = new ResizeObserver(([e]) => {
+      const { width: w, height: h } = e.contentRect
+      setSize((s) => (s.w === w && s.h === h ? s : { w, h }))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [ref])
+  return size
+}
