@@ -172,7 +172,8 @@ export function viewOf(active: string, portrait: boolean): View {
     ? ['root', ...kids, ...(portrait ? [] : nodes.filter((n) => n.featured).map((n) => n.id))]
     : kids.length
       ? [active, node.parent!, ...kids]
-      : [node.parent!, ...childrenOf(node.parent!).map((n) => n.id)]
+      : // A leaf keeps its siblings and the way back in frame.
+        [...path.slice(-3, -1), ...childrenOf(node.parent!).map((n) => n.id)]
 
   return { path, awake, dim, related, focus }
 }
@@ -198,7 +199,7 @@ export function fit(layout: Layout, focus: string[], rect: Rect, pad: Pt, lean?:
   const ys = pts.map((p) => p.y)
   const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
   const z = Math.min(
-    2.3,
+    1.9,
     Math.max(0.35, Math.min((rect.w - 2 * pad.x) / Math.max(x1 - x0, 1), (rect.h - 2 * pad.y) / Math.max(y1 - y0, 1))),
   )
   let cx = (x0 + x1) / 2

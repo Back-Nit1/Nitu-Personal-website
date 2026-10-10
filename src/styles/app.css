@@ -295,6 +295,8 @@ ul, ol {
 }
 
 .crumbs [aria-current] {
+  display: inline-block;
+  padding: 6px 0;
   color: var(--ink);
   font-weight: 500;
 }

@@ -49,7 +49,7 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
   if (!w || !h) return null
 
   const leaf = active !== 'root' && !childrenOf(active).length
-  const pad = portrait ? { x: 64, y: 58 } : { x: Math.min(150, rect.w * 0.17), y: 64 }
+  const pad = portrait ? { x: 64, y: 62 } : { x: Math.min(150, rect.w * 0.17), y: 84 }
   const cam = fit(layout, view.focus, rect, pad, leaf ? active : undefined)
   const inPath = new Set(view.path)
   // A connection is live when it leads somewhere awake, even through a resting point.
