@@ -30,7 +30,7 @@ Project links (`links` on a project record) work the same way: add real URLs and
 
 ```
 src/
-  content/     every node, once: sections, groups, 17 projects, 18 entries
+  content/     every node, once: sections, groups, 17 projects, 19 entries
   network/     layout.ts (positions, view state, camera) and Network.tsx (SVG edges + link nodes)
   app/         App shell, hash routing, appearance, measurement
   components/  header/footer, reading panel, schematics

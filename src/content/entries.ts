@@ -133,7 +133,23 @@ export const entries: AtlasNode[] = [
       'Documentation, handoffs, and systems that didn’t talk to each other made the cost of administrative friction tangible. Every minute spent on a screen was a minute not spent with a patient.',
     ],
     tags: ['Patient care', 'Healthcare workflows'],
-    related: ['pivot', 'neuropath', 'meridian'],
+    related: ['pivot', 'neuropath', 'meridian', 'shadowing'],
+  },
+
+  {
+    id: 'shadowing',
+    kind: 'entry',
+    title: 'Shadowing at RWJ',
+    parent: 'experience',
+    eyebrow: 'Clinical exposure / Shadowing',
+    lead: 'Seeing how bladder tumors are treated, up close.',
+    body: [
+      'I shadowed Dr. Saum Ghoudhoussipour at Robert Wood Johnson, an oncologist and urologist.',
+      'I learned about the robotic surgeries used to destroy tumors in the bladder, and about the drugs and therapies used to do the same.',
+    ],
+    tags: ['Shadowing', 'Oncology', 'Urology', 'Robotic surgery'],
+    related: ['penn'],
+    note: 'Physician name spelled as supplied by Nitu; confirm spelling. No dates or hours supplied.',
   },
 
   // Research

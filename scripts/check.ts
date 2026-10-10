@@ -7,7 +7,7 @@ const count = (kind: string) => nodes.filter((n) => n.kind === kind).length
 assert.equal(count('section'), 6, 'six main branches')
 assert.equal(count('group'), 5, 'five project groups')
 assert.equal(count('project'), 17, '17 projects')
-assert.equal(count('entry'), 18, '18 story/experience/research/personal entries')
+assert.equal(count('entry'), 19, '19 story/experience/research/personal entries')
 assert.equal(new Set(nodes.map((n) => n.id)).size, nodes.length, 'IDs are unique')
 assert.equal(new Set(nodes.map((n) => n.slug ?? n.id)).size, nodes.length, 'slugs are unique')
 

@@ -26,9 +26,9 @@ export const structure: AtlasNode[] = [
     title: 'Experience',
     parent: 'root',
     eyebrow: 'Where I’ve worked',
-    lead: 'Software engineering, applied AI, and product work, with patient care alongside it.',
+    lead: 'Software engineering, applied AI, and product work, with patient care and clinical shadowing alongside it.',
     body: [
-      'The engineering work comes first: a production mobile client, an AI game-design prototype, clinical-note extraction, and two companies I helped start. Patient care at Penn Medicine sits beside it as part of the picture.',
+      'The engineering work comes first: a production mobile client, an AI game-design prototype, clinical-note extraction, and two companies I helped start. Patient care at Penn Medicine and clinical shadowing sit beside it as part of the picture.',
     ],
   },
   {
