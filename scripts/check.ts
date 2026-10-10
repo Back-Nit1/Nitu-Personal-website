@@ -54,6 +54,13 @@ for (const [a, b] of required) {
   assert.ok(relatedOf(b).includes(a), `${b} ↔ ${a}`)
 }
 
+// Rendered copy carries no hyphens or dashes. `note` is internal and never shown.
+const shown = (n: (typeof nodes)[number]) =>
+  [n.title, n.eyebrow, n.lead, n.contribution, n.outcome, n.context, n.recognition, ...(n.body ?? []), ...(n.stack ?? []), ...(n.tags ?? []), ...(n.details ?? []), ...(n.flow ?? [])]
+    .filter((s): s is string => !!s)
+for (const n of nodes)
+  for (const s of shown(n)) assert.doesNotMatch(s, /[\p{L}\d]-[\p{L}\d]|[—–]/u, `${n.id}: hyphen or dash in "${s.slice(0, 40)}"`)
+
 // Layout: complete, and no two labelled siblings on top of each other.
 for (const [portrait, compact] of [[false, false], [false, true], [true, true]]) {
   const a = buildLayout(compact, portrait)
