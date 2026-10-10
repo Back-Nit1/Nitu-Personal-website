@@ -178,6 +178,7 @@ export const projects: AtlasNode[] = [
       },
     ],
     flow: ['Fund escrow', 'Cover milestone', 'Post evidence', 'Release payout'],
+    visual: 'covenant',
     related: ['themis', 'praedos'],
     note: 'Current contract releases on evidence posting (tracefund README). Older site copy and the résumé say donors approve at 50%; that was the retired deployment.',
   },
