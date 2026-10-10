@@ -1015,3 +1015,11 @@ ul, ol {
     transition-duration: 0ms !important;
   }
 }
+
+/* Narrow screens: the view control drops below the name instead of crowding it. */
+@media (max-width: 479px) {
+  .see-all {
+    top: 56px;
+    min-height: 36px;
+  }
+}
