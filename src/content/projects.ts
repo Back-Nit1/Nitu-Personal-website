@@ -171,6 +171,12 @@ export const projects: AtlasNode[] = [
       'Features include audit trails, creator reputation, and an event indexer with backfilling.',
       'Also used: Scaffold ETH 2, OpenZeppelin, Hardhat, RainbowKit, Express, AWS EC2, Nginx, and PM2.',
     ],
+    links: [
+      {
+        label: 'Contract on BaseScan',
+        url: 'https://basescan.org/address/0x9CA2E453462b87584f5A4D15f5962a4f2174BCE9',
+      },
+    ],
     flow: ['Fund escrow', 'Cover milestone', 'Post evidence', 'Release payout'],
     related: ['themis', 'praedos'],
     note: 'Current contract releases on evidence posting (tracefund README). Older site copy and the résumé say donors approve at 50%; that was the retired deployment.',
