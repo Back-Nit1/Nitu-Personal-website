@@ -128,7 +128,8 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
             style={{ transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)` }}
             onPointerEnter={() => setHot(n.id)}
             onPointerLeave={() => setHot(null)}
-            onFocus={() => setHot(n.id)}
+            // Keyboard focus lights the node's connections; focus restored after a click does not.
+            onFocus={(e) => e.currentTarget.matches(':focus-visible') && setHot(n.id)}
             onBlur={() => setHot(null)}
           >
             <span className="core" aria-hidden="true" />

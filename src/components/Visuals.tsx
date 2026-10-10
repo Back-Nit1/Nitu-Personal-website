@@ -97,7 +97,7 @@ function Seqra() {
       <g className="v-text">
         <text x="60" y="124" textAnchor="middle">generate</text>
         <text x="170" y="124" textAnchor="middle">rank</text>
-        <text x="276" y="124" textAnchor="middle">predict structure</text>
+        <text x="276" y="124" textAnchor="middle">structure</text>
       </g>
     </svg>
   )
