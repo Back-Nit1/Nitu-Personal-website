@@ -69,22 +69,22 @@ export const projects: AtlasNode[] = [
     eyebrow: 'Shipped / Founder',
     lead: 'Reading and speaking become part of the game.',
     body: [
-      'PALURA makes speech-driven educational games for children. Players say words and spells out loud to act, so the practice is the adventure and not a chore beside it.',
+      'PALURA makes speech driven educational games for children. Players say words and spells out loud to act, so the practice is the adventure and not a chore beside it.',
       'Caverunner is one of the shipped games: a platformer where your voice moves you forward.',
     ],
     contribution:
-      'I led a four-person engineering team and owned architecture, playtesting, and user research.',
+      'I led a four person engineering team and owned architecture, playtesting, and user research.',
     stack: ['Unity', 'C#', 'WebGL', 'Speech recognition'],
     outcome: '2 production games · 20+ schools',
     context: 'Latest deployment snapshot. Speech recognition providers varied between versions.',
     details: [
-      'Two production games shipped in five months, with weekly playtesting and speech-recognition tuning.',
+      'Two production games shipped in five months, with weekly playtesting and speech recognition tuning.',
       'The latest adoption snapshot: 20+ schools, five YMCAs, three Kumons, and 100 weekly active users.',
       'Discovery included 110+ interviews.',
     ],
     visual: 'palura',
     related: ['origin', 'games'],
-    note: 'Google Cloud Speech-to-Text, Whisper, and Wispr Flow appear in different materials; describe speech integration generally. Do not combine adoption counts with other historical snapshots.',
+    note: 'Google Cloud Speech to Text, Whisper, and Wispr Flow appear in different materials; describe speech integration generally. Do not combine adoption counts with other historical snapshots.',
   },
   {
     id: 'seqra',
