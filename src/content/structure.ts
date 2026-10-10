@@ -15,9 +15,9 @@ export const structure: AtlasNode[] = [
     title: 'My story',
     parent: 'root',
     eyebrow: 'How I got here',
-    lead: 'I started in patient care and neuroscience, and ended up writing software.',
+    lead: 'I build software: full-stack products, applied ML, and agents.',
     body: [
-      'The path makes more sense than it sounds. Hospital shifts showed me where people lose time to bad tools. Labs taught me how to ask a careful question. Code turned out to be the fastest way I had to do something about either.',
+      'I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
     ],
   },
   {
@@ -26,9 +26,9 @@ export const structure: AtlasNode[] = [
     title: 'Experience',
     parent: 'root',
     eyebrow: 'Where I’ve worked',
-    lead: 'Clinical software, a game-building startup, a hospital floor, and a few things I started myself.',
+    lead: 'Software engineering, applied AI, and product work, with patient care alongside it.',
     body: [
-      'Most of this work sits close to a real user with a real constraint: a clinician without a signal, a teacher building a first game, a patient waiting on paperwork.',
+      'The engineering work comes first: a production mobile client, an AI game-design prototype, clinical-note extraction, and two companies I helped start. Patient care at Penn Medicine sits beside it as part of the picture.',
     ],
   },
   {

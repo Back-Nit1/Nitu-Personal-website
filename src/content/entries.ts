@@ -3,6 +3,20 @@ import type { AtlasNode } from './types.ts'
 export const entries: AtlasNode[] = [
   // My story
   {
+    id: 'education',
+    kind: 'entry',
+    title: 'Rutgers',
+    parent: 'story',
+    eyebrow: 'Education',
+    lead: 'Computer science meets cell biology and neuroscience.',
+    body: [
+      'I study at Rutgers–New Brunswick, working toward a B.S. in Computer Science and a B.A. in Cell Biology and Neuroscience. I expect to graduate in May 2028.',
+    ],
+    tags: ['Rutgers–New Brunswick', 'CS + neuroscience'],
+    related: ['neuroscience', 'rl'],
+    note: 'Degrees and graduation date as listed in the latest supplied materials.',
+  },
+  {
     id: 'pivot',
     kind: 'entry',
     title: 'From care to code',
@@ -30,21 +44,6 @@ export const entries: AtlasNode[] = [
     tags: ['PALURA', 'Learning', 'Accessible experiences'],
     related: ['palura', 'games'],
   },
-  {
-    id: 'education',
-    kind: 'entry',
-    title: 'Rutgers',
-    parent: 'story',
-    eyebrow: 'Education',
-    lead: 'Computer science meets cell biology and neuroscience.',
-    body: [
-      'I study at Rutgers–New Brunswick, working toward a B.S. in Computer Science and a B.A. in Cell Biology and Neuroscience. I expect to graduate in May 2028.',
-    ],
-    tags: ['Rutgers–New Brunswick', 'CS + neuroscience'],
-    related: ['neuroscience', 'rl'],
-    note: 'Degrees and graduation date as listed in the latest supplied materials.',
-  },
-
   // Experience
   {
     id: 'neuropath',
@@ -96,20 +95,6 @@ export const entries: AtlasNode[] = [
     related: ['meridian', 'seqra'],
   },
   {
-    id: 'penn',
-    kind: 'entry',
-    title: 'Penn Medicine',
-    parent: 'experience',
-    eyebrow: 'Patient care / CNA',
-    lead: 'Night shifts changed how I think about software.',
-    body: [
-      'I worked as a certified nursing assistant at Penn Medicine Princeton Medical Center.',
-      'Documentation, handoffs, and systems that didn’t talk to each other made the cost of administrative friction tangible. Every minute spent on a screen was a minute not spent with a patient.',
-    ],
-    tags: ['Patient care', 'Healthcare workflows'],
-    related: ['pivot', 'neuropath', 'meridian'],
-  },
-  {
     id: 'founding',
     kind: 'entry',
     title: 'Founder work',
@@ -135,6 +120,20 @@ export const entries: AtlasNode[] = [
     ],
     tags: ['Events', 'Mentor outreach', 'Founder community'],
     related: ['kairos', 'outreach'],
+  },
+  {
+    id: 'penn',
+    kind: 'entry',
+    title: 'Penn Medicine',
+    parent: 'experience',
+    eyebrow: 'Alongside the engineering / Patient care',
+    lead: 'Night shifts changed how I think about software.',
+    body: [
+      'I worked as a certified nursing assistant at Penn Medicine Princeton Medical Center.',
+      'Documentation, handoffs, and systems that didn’t talk to each other made the cost of administrative friction tangible. Every minute spent on a screen was a minute not spent with a patient.',
+    ],
+    tags: ['Patient care', 'Healthcare workflows'],
+    related: ['pivot', 'neuropath', 'meridian'],
   },
 
   // Research
