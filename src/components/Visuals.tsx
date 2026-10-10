@@ -53,7 +53,7 @@ function Naigos() {
 
 function Palura() {
   return (
-    <svg viewBox="0 0 320 160" role="img" aria-label="A small platform-game scene: a character says the word leap and jumps a gap toward a gem">
+    <svg viewBox="0 0 320 160" role="img" aria-label="A small platform game scene: a character says the word leap and jumps a gap toward a gem">
       <g className="v-soft">
         <rect x="0" y="118" width="120" height="42" rx="4" />
         <rect x="170" y="96" width="92" height="64" rx="4" />
@@ -103,7 +103,84 @@ function Seqra() {
   )
 }
 
-const scenes: Record<VisualId, () => ReactNode> = { nomos: Nomos, naigos: Naigos, palura: Palura, seqra: Seqra }
+function Kairos() {
+  const stages: [number, number, number, string][] = [
+    [20, 92, 12, 'scan'],
+    [126, 60, 6, 'filter'],
+    [220, 28, 3, 'surface'],
+  ]
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A funnel in three stages: many opportunities scanned, fewer pass rule based filters, a handful surfaced to the founder">
+      <path className="v-link" d="M96 80H126M186 80H220" />
+      {stages.map(([x, h, n, label], s) => (
+        <g key={label}>
+          <rect className="v-soft" x={x} y={80 - h / 2} width={s === 0 ? 76 : s === 1 ? 60 : 56} height={h} rx="5" />
+          {range(n).map((i) => (
+            <circle
+              key={i}
+              className={s === 2 ? 'v-fill' : 'v-node'}
+              cx={x + 12 + (i % 4) * 14}
+              cy={80 - h / 2 + 12 + Math.floor(i / 4) * 14}
+              r="3.2"
+            />
+          ))}
+          <text className="v-text" x={x + (s === 0 ? 38 : s === 1 ? 30 : 28)} y="140" textAnchor="middle">{label}</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+function Gate() {
+  const outs: [number, string, boolean][] = [[45, 'allow', true], [80, 'deny', false], [115, 'review', false]]
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A model proposes an action, a deterministic policy gate decides, and the result is allow, deny, or human review">
+      <circle className="v-ring" cx="52" cy="80" r="18" />
+      <text className="v-text" x="52" y="118" textAnchor="middle">model</text>
+      <path className="v-link" d="M70 80H146" />
+      <rect className="v-fill" x="146" y="26" width="10" height="108" rx="3" />
+      <text className="v-text" x="151" y="150" textAnchor="middle">policy</text>
+      {outs.map(([y, label, solid]) => (
+        <g key={label}>
+          <path className="v-line" d={`M156 80C190 80 196 ${y} 230 ${y}`} />
+          <circle className={solid ? 'v-fill' : 'v-node'} cx="236" cy={y} r="6" />
+          <text className="v-text" x="252" y={y + 3}>{label}</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+function Covenant() {
+  const steps = [0, 1, 2]
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="An escrow vault holding funds in layers, released one milestone at a time as evidence is posted">
+      <rect className="v-node" x="20" y="28" width="64" height="104" rx="6" />
+      {range(4).map((i) => (
+        <rect key={i} className={i === 3 ? 'v-soft' : 'v-fill'} x="28" y={36 + i * 23} width="48" height="17" rx="3" opacity={i === 3 ? 1 : 0.35 + i * 0.2} />
+      ))}
+      <text className="v-text" x="52" y="150" textAnchor="middle">escrow</text>
+      {steps.map((i) => (
+        <g key={i}>
+          <path className="v-line" d={`M${120 + i * 66} ${120 - i * 28}h54`} />
+          <path className="v-link" d={`M84 ${44 + i * 23}C ${100} ${44 + i * 23} ${110} ${110 - i * 28} ${147 + i * 66} ${110 - i * 28}`} />
+          <path className="v-ring" d={`M${147 + i * 66} ${72 - i * 28}v-20l12 6-12 6`} />
+          <text className="v-text" x={147 + i * 66} y={140} textAnchor="middle">{`step ${i + 1}`}</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+const scenes: Record<VisualId, () => ReactNode> = {
+  nomos: Nomos,
+  naigos: Naigos,
+  palura: Palura,
+  seqra: Seqra,
+  kairos: Kairos,
+  gate: Gate,
+  covenant: Covenant,
+}
 
 export function Scene({ id }: { id: VisualId }) {
   const Draw = scenes[id]
