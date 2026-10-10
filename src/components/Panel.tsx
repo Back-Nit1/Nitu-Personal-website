@@ -1,5 +1,5 @@
 import type { ReactNode, RefObject } from 'react'
-import { childrenOf, contactLinks, get, leafCount, pathTo, relatedOf, routeOf, sectionOf, type AtlasNode } from '../content/index.ts'
+import { childrenOf, contactLinks, recovering, get, leafCount, pathTo, relatedOf, routeOf, sectionOf, type AtlasNode } from '../content/index.ts'
 import type { Route } from '../app/hooks.ts'
 import { Flow, Scene } from './Visuals.tsx'
 
@@ -97,9 +97,12 @@ function Reading({ node }: { node: AtlasNode }) {
 
       {node.id === 'connect' &&
         (contactLinks.length ? (
-          <p className="actions">
-            {contactLinks.map((l) => <a key={l.url} href={l.url} rel="noreferrer">{l.label} ↗</a>)}
-          </p>
+          <>
+            <p className="actions">
+              {contactLinks.map((l) => <a key={l.url} href={l.url} rel="noreferrer">{l.label} ↗</a>)}
+            </p>
+            <p className="scope">Main GitHub: {recovering.handle} — {recovering.note}</p>
+          </>
         ) : (
           <p className="scope solo">Direct contact links are on their way. Until then, the work speaks first.</p>
         ))}

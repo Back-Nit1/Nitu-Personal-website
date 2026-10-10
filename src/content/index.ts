@@ -4,7 +4,7 @@ import { projects } from './projects.ts'
 import { entries } from './entries.ts'
 
 export type { AtlasNode, SectionId, VisualId, Link } from './types.ts'
-export { contactLinks } from './site.ts'
+export { contactLinks, recovering } from './site.ts'
 
 export const nodes: AtlasNode[] = [...structure, ...entries, ...projects]
 
