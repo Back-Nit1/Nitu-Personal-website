@@ -71,7 +71,7 @@ export function App() {
       <Header theme={theme} onToggleTheme={toggleTheme} />
       <main className="main">
         <div className="stage" ref={stageRef}>
-          <Network active={id} portrait={portrait} w={w} h={h} rect={rect} />
+          <Network active={id} compact={!wide} portrait={portrait} w={w} h={h} rect={rect} />
         </div>
         <div id="reading">
           <Panel route={route} titleRef={titleRef} onBack={onBack} />

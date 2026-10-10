@@ -578,6 +578,10 @@ ul, ol {
 
 .node[data-kind='root'] .label { top: calc(50% + 34px); }
 
+@media (max-width: 719px) {
+  .node[data-kind='root'] .sub { display: none; }
+}
+
 /* ---------- Reading panel ---------- */
 
 .panel {

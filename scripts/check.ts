@@ -55,9 +55,9 @@ for (const [a, b] of required) {
 }
 
 // Layout: deterministic, complete, and no two labelled siblings on top of each other.
-for (const portrait of [false, true]) {
-  const a = buildLayout(portrait)
-  assert.deepEqual(a, buildLayout(portrait), 'layout is deterministic')
+for (const [portrait, compact] of [[false, false], [false, true], [true, true]]) {
+  const a = buildLayout(compact, portrait)
+  assert.deepEqual(a, buildLayout(compact, portrait), 'layout is deterministic')
   for (const n of nodes) assert.ok(a.pos[n.id], `${n.id}: has a position`)
   for (const n of nodes) {
     const sibs = childrenOf(n.id)
@@ -69,9 +69,9 @@ for (const portrait of [false, true]) {
             `${s.id} and ${t.id} overlap (${portrait ? 'portrait' : 'landscape'})`,
           )
     // Every view frames the node it is about.
-    const v = viewOf(n.id, portrait)
+    const v = viewOf(n.id, compact)
     assert.ok(v.awake.has(n.id) && v.focus.length > 0, `${n.id}: view is usable`)
   }
 }
 
-console.log(`ok — ${nodes.length} nodes, ${required.length} required connections, 2 layouts`)
+console.log(`ok — ${nodes.length} nodes, ${required.length} required connections, 3 layouts`)

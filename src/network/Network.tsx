@@ -4,6 +4,9 @@ import { buildLayout, fit, viewOf, type Pt, type Rect } from './layout.ts'
 
 interface Props {
   active: string
+  /** Stacked layout: one branch at a time, children in a column. */
+  compact: boolean
+  /** Phone width: branches arranged tall. */
   portrait: boolean
   /** Stage size in pixels. */
   w: number
@@ -29,10 +32,10 @@ function subLabel(id: string): string | undefined {
   return n.id === 'projects' || n.kind === 'group' ? `${c} projects` : `${c} entries`
 }
 
-export const Network = memo(function Network({ active, portrait, w, h, rect }: Props) {
+export const Network = memo(function Network({ active, compact, portrait, w, h, rect }: Props) {
   const [hot, setHot] = useState<string | null>(null)
-  const layout = buildLayout(portrait)
-  const view = useMemo(() => viewOf(active, portrait), [active, portrait])
+  const layout = buildLayout(compact, portrait)
+  const view = useMemo(() => viewOf(active, compact), [active, compact])
 
   // Geometry lives in world space and is computed once per layout;
   // travelling only changes one transform on the group and one on each node.
@@ -49,8 +52,16 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
   if (!w || !h) return null
 
   const leaf = active !== 'root' && !childrenOf(active).length
-  const pad = portrait ? { x: 64, y: 62 } : { x: Math.min(150, rect.w * 0.17), y: 84 }
-  const cam = fit(layout, view.focus, rect, pad, leaf ? active : undefined)
+  // Stacked layout: labels run to one side of the column, so that side is reserved for them.
+  const labelSide = layout.side[view.focus[view.focus.length - 1]]
+  const reserve = compact && active !== 'root' && (labelSide === 'left' || labelSide === 'right') ? Math.min(140, w * 0.38) : 0
+  const frame = reserve ? { ...rect, x: labelSide === 'left' ? reserve : 54, w: rect.w - reserve - 54 } : rect
+  const pad = reserve
+    ? { x: 22, y: 46 }
+    : compact
+      ? { x: Math.min(110, w * 0.27), y: 62 }
+      : { x: Math.min(150, rect.w * 0.17), y: 84 }
+  const cam = fit(layout, view.focus, frame, pad, leaf && !compact ? active : undefined)
   const inPath = new Set(view.path)
   // A connection is live when it leads somewhere awake, even through a resting point.
   const reached = new Set([...view.awake].flatMap((id) => pathTo(id).map((n) => n.id)))
@@ -109,7 +120,7 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
             data-side={layout.side[n.id]}
             data-state={state}
             data-dim={view.dim.has(n.id) || undefined}
-            data-related={view.related.has(n.id) || undefined}
+            data-related={(awake && view.related.has(n.id)) || undefined}
             // Dormant points are decoration until their branch opens.
             inert={!awake || offstage}
             aria-current={n.id === active ? 'page' : undefined}
