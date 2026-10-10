@@ -6,7 +6,7 @@ import type { Link } from './types.ts'
  * URLs belong here.
  */
 const contact: Record<string, string | undefined> = {
-  Email: undefined, // 'mailto:you@example.com'
+  Email: 'mailto:nityanth.maramreddy@gmail.com',
   LinkedIn: 'https://www.linkedin.com/in/nityanth-maramreddy-7ba0a2208/',
   Résumé:
     'https://docs.google.com/document/d/1mI24ZZBwZTmtUI9f5EGQ-E3IOt4ETWhq/edit?usp=sharing&ouid=117823466610923543736&rtpof=true&sd=true',
