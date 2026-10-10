@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useSyncExternalStore, type RefObject } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState, useSyncExternalStore, type RefObject } from 'react'
 import { resolve, routeOf } from '../content/index.ts'
 
 // --- Hash routing ---
@@ -105,13 +105,14 @@ export function useMedia(query: string): boolean {
 /** Element size, kept current through resizes and orientation changes. */
 export function useSize(ref: RefObject<HTMLElement | null>): { w: number; h: number } {
   const [size, setSize] = useState({ w: 0, h: 0 })
-  useEffect(() => {
+  // Measured before first paint, so the graph is there from the first frame.
+  useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
-    const ro = new ResizeObserver(([e]) => {
-      const { width: w, height: h } = e.contentRect
-      setSize((s) => (s.w === w && s.h === h ? s : { w, h }))
-    })
+    const measure = () =>
+      setSize((s) => (s.w === el.clientWidth && s.h === el.clientHeight ? s : { w: el.clientWidth, h: el.clientHeight }))
+    measure()
+    const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
   }, [ref])

@@ -34,8 +34,9 @@ function subLabel(id: string): string | undefined {
 
 export const Network = memo(function Network({ active, compact, portrait, w, h, rect }: Props) {
   const [hot, setHot] = useState<string | null>(null)
+  const roomy = w >= 1200
   const layout = buildLayout(compact, portrait)
-  const view = useMemo(() => viewOf(active, compact), [active, compact])
+  const view = useMemo(() => viewOf(active, compact, roomy), [active, compact, roomy])
 
   // Geometry lives in world space and is computed once per layout;
   // travelling only changes one transform on the group and one on each node.

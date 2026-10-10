@@ -159,7 +159,8 @@ export interface View {
   focus: string[]
 }
 
-export function viewOf(active: string, compact: boolean): View {
+/** `featured`: show the fast-path satellites at the root, when there is room for them. */
+export function viewOf(active: string, compact: boolean, featured = !compact): View {
   const path = pathTo(active).map((n) => n.id)
   const inPath = new Set(path)
   const related = new Set(active === 'root' ? [] : relatedOf(active))
@@ -172,7 +173,7 @@ export function viewOf(active: string, compact: boolean): View {
   const isLeaf = !childrenOf(active).length
   for (const n of nodes) {
     const up = atRoot
-      ? n.kind === 'root' || n.kind === 'section' || (!compact && n.featured)
+      ? n.kind === 'root' || n.kind === 'section' || (featured && n.featured)
       : compact
         ? // Narrow screens show one branch at a time: the path, its children, a leaf's siblings.
           inPath.has(n.id) || n.parent === active || (isLeaf && n.parent === parentOfActive)
@@ -186,7 +187,7 @@ export function viewOf(active: string, compact: boolean): View {
   const node = get(active)
   const siblings = childrenOf(node.parent ?? '').map((n) => n.id)
   const focus = atRoot
-    ? ['root', ...kids, ...(compact ? [] : nodes.filter((n) => n.featured).map((n) => n.id))]
+    ? ['root', ...kids, ...(featured ? nodes.filter((n) => n.featured).map((n) => n.id) : [])]
     : compact
       ? // Frame the column being read; the path back leads off toward the parent.
         kids.length ? [active, ...kids] : [node.parent!, ...siblings]
