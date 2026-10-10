@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState, useSyncExternalStore, type RefObject } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState, useSyncExternalStore, type RefObject } from 'react'
 import { resolve, routeOf } from '../content/index.ts'
 
 // --- Hash routing ---
@@ -34,7 +34,7 @@ export function useRoute(): Route & { depth: number } {
     return () => removeEventListener('hashchange', onChange)
   }, [])
 
-  const route = parse(hash)
+  const route = useMemo(() => parse(hash), [hash])
 
   // One canonical URL per entry: `#/nomos` becomes `#/projects/autonomy/nomos`.
   useEffect(() => {
@@ -42,7 +42,8 @@ export function useRoute(): Route & { depth: number } {
       history.replaceState(history.state, '', routeOf(route.id))
   }, [route.view, route.id])
 
-  return { ...route, depth: depth() }
+  // Stable identity between renders, so memoized readers only update on navigation.
+  return useMemo(() => ({ ...route, depth: depth() }), [route])
 }
 
 // --- Measurement ---

@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from 'react'
+import { memo, type ReactNode, type RefObject } from 'react'
 import { childrenOf, contactLinks, recovering, get, leafCount, pathTo, relatedOf, routeOf, sectionOf, type AtlasNode } from '../content/index.ts'
 import type { Route } from '../app/hooks.ts'
 import { Flow, Scene } from './Visuals.tsx'
@@ -141,7 +141,7 @@ function Outline({ id }: { id: string }) {
   )
 }
 
-export function Panel({ route, titleRef, onBack }: Props) {
+export const Panel = memo(function Panel({ route, titleRef, onBack }: Props) {
   const node = get(route.id)
   const open = route.view !== 'node' || route.id !== 'root'
   if (!open) return null
@@ -172,4 +172,4 @@ export function Panel({ route, titleRef, onBack }: Props) {
       </article>
     </aside>
   )
-}
+})
