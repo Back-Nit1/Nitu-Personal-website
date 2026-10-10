@@ -401,15 +401,19 @@ export const projects: AtlasNode[] = [
     eyebrow: 'Design engineering / Assessments',
     lead: 'Practicing the craft of clear, useful interfaces.',
     body: [
-      'Frontend assessments: a hotel homepage, and marketing and details dashboards built around year-over-year metrics.',
+      'Frontend assessments: a hotel homepage, and marketing and details dashboards built around year over year metrics.',
     ],
     contribution: 'Interface design and frontend implementation.',
-    stack: ['Frontend', 'Data visualization', 'Design'],
+    stack: ['React', 'TypeScript', 'Vite', 'Data visualization'],
     outcome: 'Homepage → dashboards → details',
     context: 'Assessment work, not client projects.',
+    details: [
+      'The homepage is written for one reader, the owner of an independent hotel, and arranged to answer four questions in the first ten seconds: is this for a property like mine, do they understand my problem, what do they do, and what is the next step.',
+      'It is a single responsive page of nine sections with social proof and a low pressure call to action.',
+    ],
     flow: ['Homepage', 'Dashboards', 'Details'],
     related: ['star', 'macroleague'],
-    note: 'Project-specific stack is not established; do not invent a framework.',
+    note: 'Project specific stack is not established; do not invent a framework.',
   },
   {
     id: 'campus',
