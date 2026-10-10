@@ -286,6 +286,7 @@ export const projects: AtlasNode[] = [
       'The wider design uses React, TypeScript, Zod, Bedrock AgentCore, S3, CDK, Lambda, and CloudWatch.',
     ],
     flow: ['Identify', 'Collect evidence', 'Classify', 'Policy decision'],
+    visual: 'gate',
     related: ['sentinel', 'covenant'],
   },
   {
@@ -311,6 +312,7 @@ export const projects: AtlasNode[] = [
       'After the loop, Sentinel reads Stripe, Salesforce, and Slack itself. A case is resolved only if every postcondition passes.',
     ],
     flow: ['Investigate', 'Decide', 'Act', 'Readback verify'],
+    visual: 'gate',
     related: ['themis', 'cerno', 'covenant'],
     note: 'Source: Downloads/Sentinel /sentinel README. README mentions eight scenarios but reports 7/7; stating the reported result.',
   },
