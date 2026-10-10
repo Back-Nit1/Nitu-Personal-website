@@ -388,13 +388,10 @@ ul, ol {
 }
 
 /* Electrical signals: a short bright dash runs the length of an edge, then rests. */
-.flash {
-  filter: drop-shadow(0 0 3px rgb(255 255 255 / 0.55));
-}
-
 .flash path {
   stroke: #cfcfcf;
-  stroke-width: 1.8;
+  stroke-width: 2.2;
+  stroke-linecap: round;
   stroke-dasharray: 9 500;
   animation: flash 24s linear infinite;
 }
@@ -656,8 +653,6 @@ ul, ol {
   --pad: 28px;
   background: rgb(0 0 0 / 0.9);
   border-top: 1px solid var(--line-strong);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
 }
 
 @media (min-width: 900px) {
