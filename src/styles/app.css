@@ -6,6 +6,12 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scrollbar-color: #333 transparent;
+}
+
+::selection {
+  background: #fff;
+  color: #000;
 }
 
 body {
@@ -42,7 +48,6 @@ ul, ol {
 :focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 .sr-only,
@@ -777,7 +782,6 @@ ul, ol {
 .chips li {
   padding: 3px 10px;
   border: 1px solid var(--line);
-  border-radius: 999px;
   font: 400 12px/1.5 var(--mono);
 }
 
@@ -841,15 +845,14 @@ ul, ol {
   min-height: 44px;
   padding: 0 16px;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
   font: 500 12.5px/1 var(--mono);
   text-decoration: none;
   transition: background var(--quick), color var(--quick);
 }
 
 .actions a:hover {
-  background: var(--ink);
-  color: var(--surface);
+  background: #fff;
+  color: #000;
 }
 
 .rows {
@@ -879,8 +882,8 @@ ul, ol {
   width: 7px;
   height: 7px;
   margin-right: 10px;
+  border: 1.5px solid #fff;
   border-radius: 50%;
-  background: var(--accent);
   vertical-align: 1px;
   transition: transform var(--quick);
 }
@@ -949,7 +952,6 @@ ul, ol {
 .scene {
   padding: 10px;
   border: 1px solid var(--line);
-  border-radius: 12px;
   background: var(--bg);
 }
 
