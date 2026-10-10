@@ -95,3 +95,19 @@ export const relatedOf = (id: string): string[] => relatedIds.get(id) ?? noIds
 export const crossEdges: [string, string][] = [...linked].flatMap(([a, set]) =>
   [...set].filter((b) => a < b && get(a).parent !== b && get(b).parent !== a).map((b) => [a, b] as [string, string]),
 )
+
+/** Closest entries to a mistyped address: any whose id, slug, or title shares a word with it. */
+export function suggest(hash: string, limit = 4): AtlasNode[] {
+  const words = hash.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)
+  if (!words.length) return []
+  return nodes
+    .filter((n) => n.kind !== 'root')
+    .map((n) => {
+      const hay = `${n.id} ${n.slug ?? ''} ${n.title}`.toLowerCase()
+      return { n, score: words.filter((w) => hay.includes(w) || hay.includes(w.slice(0, 4)) || w.includes(n.id)).length }
+    })
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => s.n)
+}

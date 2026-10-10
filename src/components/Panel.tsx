@@ -1,5 +1,5 @@
 import { memo, type ReactNode, type RefObject } from 'react'
-import { childrenOf, contactLinks, recovering, get, leafCount, pathTo, relatedOf, routeOf, sectionOf, type AtlasNode } from '../content/index.ts'
+import { childrenOf, contactLinks, recovering, get, leafCount, pathTo, relatedOf, routeOf, sectionOf, suggest, type AtlasNode } from '../content/index.ts'
 import type { Route } from '../app/hooks.ts'
 import { Flow, Scene } from './Visuals.tsx'
 
@@ -124,6 +124,27 @@ function Reading({ node }: { node: AtlasNode }) {
   )
 }
 
+/** A dead address: say what was asked for and offer the nearest real places. */
+function Missing() {
+  const asked = location.hash.replace(/^#\/?/, '')
+  const near = suggest(asked)
+  return (
+    <>
+      <p className="lead">
+        {asked ? <>Nothing is filed under <code>{asked}</code>.</> : 'This link may be old or mistyped.'} Every entry is still
+        reachable from the whole network or the index.
+      </p>
+      {near.length > 0 && (
+        <section aria-label="Did you mean">
+          <h3>Did you mean</h3>
+          <NodeLinks items={near} showLead />
+        </section>
+      )}
+      <p className="actions"><a href="#/">Whole network</a><a href="#/index">Index</a></p>
+    </>
+  )
+}
+
 /** Every entry as a plain nested list: the atlas without the graph. */
 function Outline({ id }: { id: string }) {
   const kids = childrenOf(id)
@@ -150,7 +171,7 @@ export const Panel = memo(function Panel({ route, titleRef, onBack }: Props) {
     route.view === 'index'
       ? ['Index', 'Everything in the atlas', <><p className="lead">The same places as the network, as a plain list.</p><Outline id="root" /></>]
       : route.view === 'missing'
-        ? ['Off the map', 'There’s nothing at this address', <><p className="lead">The link may be old or mistyped. Every entry is still reachable from the whole network or the index.</p><p className="actions"><a href="#/">Whole network</a><a href="#/index">Index</a></p></>]
+        ? ['Off the map', 'There’s nothing at this address', <Missing />]
         : [node.eyebrow ?? kindLabel[node.kind], node.title, <Reading node={node} />]
 
   const trail = route.view === 'node' ? pathTo(node.id).slice(1, -1) : []
