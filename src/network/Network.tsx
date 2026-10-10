@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from 'react'
 import { nodes, get, childrenOf, crossEdges, leafCount, pathTo, routeOf, sectionOf } from '../content/index.ts'
 import { buildLayout, fit, viewOf, type Pt, type Rect } from './layout.ts'
 
@@ -15,14 +15,14 @@ interface Props {
   rect: Rect
 }
 
-/** A gently bowed connection; `k` sets how far and which way it bends. */
-function curve(a: Pt, b: Pt, k: number): string {
-  const mx = (a.x + b.x) / 2 - (b.y - a.y) * k
-  const my = (a.y + b.y) / 2 + (b.x - a.x) * k
-  return `M${a.x} ${a.y}Q${Math.round(mx)} ${Math.round(my)} ${b.x} ${b.y}`
-}
+const line = (a: Pt, b: Pt) => `M${a.x} ${a.y}L${b.x} ${b.y}`
 
 const treeEdges = nodes.filter((n) => n.parent).map((n) => [n.parent!, n.id] as const)
+const FLASH_GROUPS = 24
+const allIds = nodes.map((n) => n.id)
+
+/** The visitor's own camera move, applied on top of the one the route chose. */
+const HOME = { dx: 0, dy: 0, k: 1, all: false }
 
 function subLabel(id: string): string | undefined {
   const n = get(id)
@@ -34,6 +34,10 @@ function subLabel(id: string): string | undefined {
 
 export const Network = memo(function Network({ active, compact, portrait, w, h, rect }: Props) {
   const [hot, setHot] = useState<string | null>(null)
+  const [user, setUser] = useState(HOME)
+  const [dragging, setDragging] = useState(false)
+  const net = useRef<HTMLElement>(null)
+  const drag = useRef<{ x: number; y: number; moved: boolean } | null>(null)
   const roomy = w >= 1200
   const layout = buildLayout(compact, portrait)
   const view = useMemo(() => viewOf(active, compact, roomy), [active, compact, roomy])
@@ -42,13 +46,43 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
   // travelling only changes one transform on the group and one on each node.
   const geometry = useMemo(
     () => ({
-      tree: treeEdges.map(([a, b], i) => curve(layout.pos[a], layout.pos[b], i % 2 ? 0.1 : -0.1)),
-      cross: crossEdges.map(([a, b]) => curve(layout.pos[a], layout.pos[b], 0.2)),
-      relay: layout.relayEdges.map(([a, b], i) => curve(a, b, i % 2 ? 0.14 : -0.14)).join(''),
-      dots: layout.relays.map((p) => `M${p.x} ${p.y}h0`).join(''),
+      tree: treeEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b])),
+      cross: crossEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b])),
+      relay: layout.relayEdges.map(([a, b]) => line(a, b)).join(''),
+      // Three depths of point: smaller and dimmer ones sit "behind".
+      dots: [0, 1, 2].map((m) => layout.relays.filter((_, i) => i % 3 === m).map((p) => `M${p.x} ${p.y}h0`).join('')),
+      // Every connection carries signals. Edges are dealt into groups so each group fires on its own beat.
+      flash: Array.from({ length: FLASH_GROUPS }, (_, g) =>
+        [...layout.relayEdges.map(([a, b]) => line(a, b)), ...treeEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b]))]
+          .filter((_, i) => i % FLASH_GROUPS === g)
+          .join(''),
+      ),
     }),
     [layout],
   )
+
+  // A new destination starts from its own framing again.
+  useEffect(() => setUser(HOME), [active, compact])
+
+  // Wheel / trackpad pinch zooms toward the cursor. Stacked pages keep plain scrolling.
+  useEffect(() => {
+    const el = net.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      if (compact && !e.ctrlKey) return
+      e.preventDefault()
+      const r = el.getBoundingClientRect()
+      const mx = e.clientX - r.left - r.width / 2
+      const my = e.clientY - r.top - r.height / 2
+      setUser((u) => {
+        const k = Math.min(3, Math.max(0.35, u.k * Math.exp(-e.deltaY * 0.0015)))
+        const f = 1 - k / u.k
+        return { dx: u.dx + (mx - u.dx) * f, dy: u.dy + (my - u.dy) * f, k, all: false }
+      })
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [compact, w, h])
 
   if (!w || !h) return null
 
@@ -62,17 +96,89 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
     : compact
       ? { x: Math.min(110, w * 0.27), y: 62 }
       : { x: Math.min(150, rect.w * 0.17), y: 84 }
-  const cam = fit(layout, view.focus, frame, pad, leaf && !compact ? active : undefined)
+  const base = fit(layout, view.focus, frame, pad, leaf && !compact ? active : undefined)
+  const cx = w / 2
+  const cy = h / 2
+  const cam = {
+    x: (base.x - cx) * user.k + cx + user.dx,
+    y: (base.y - cy) * user.k + cy + user.dy,
+    z: base.z * user.k,
+  }
   const inPath = new Set(view.path)
   // A connection is live when it leads somewhere awake, even through a resting point.
   const reached = new Set([...view.awake].flatMap((id) => pathTo(id).map((n) => n.id)))
+  // One hop beyond the hovered point: the signal spreads outward.
+  const near = new Set<string>()
+  if (hot)
+    for (const [a, b] of treeEdges) {
+      if (a === hot) near.add(b)
+      if (b === hot) near.add(a)
+    }
+  const dist = (id: string) => Math.hypot(layout.pos[id].x, layout.pos[id].y)
+  const transform = { transform: `translate(${cam.x}px,${cam.y}px) scale(${cam.z})` }
+
+  const limit = (v: number, m: number) => Math.max(-m, Math.min(m, v))
+  const onPointerDown = (e: RPointerEvent<HTMLElement>) => {
+    if (e.button === 0) drag.current = { x: e.clientX, y: e.clientY, moved: false }
+  }
+  const onPointerMove = (e: RPointerEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+    const d = drag.current
+    if (!d) return
+    const mx = e.clientX - d.x
+    const my = e.clientY - d.y
+    if (!d.moved) {
+      if (Math.hypot(mx, my) < 5) return
+      // Captured only once it is a drag, so a plain click still reaches the node.
+      d.moved = true
+      e.currentTarget.setPointerCapture(e.pointerId)
+      setDragging(true)
+      setHot(null)
+    }
+    d.x = e.clientX
+    d.y = e.clientY
+    setUser((u) => ({ ...u, dx: limit(u.dx + mx, w), dy: limit(u.dy + my, h), all: false }))
+  }
+  const onPointerEnd = () => {
+    drag.current = null
+    setDragging(false)
+  }
+  const seeAll = () => {
+    if (user.all) return setUser(HOME)
+    const all = fit(layout, allIds, rect, { x: 44, y: 78 })
+    const k = all.z / base.z
+    setUser({ k, dx: all.x - ((base.x - cx) * k + cx), dy: all.y - ((base.y - cy) * k + cy), all: true })
+  }
+
+  // Beside the reading panel, a single line ties the open neuron to its sheet.
+  const at = layout.pos[active]
+  const lx = at.x * cam.z + cam.x
+  const ly = at.y * cam.z + cam.y
+  const panelEdge = rect.x + rect.w
+  const leader = !compact && active !== 'root' && lx < panelEdge - 8 && ly > 0 && ly < h
 
   return (
-    <nav className="net" aria-label="Neural network">
+    <nav
+      ref={net}
+      className={`net${dragging ? ' dragging' : ''}`}
+      aria-label="Neural network"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
+      onDragStart={(e) => e.preventDefault()}
+    >
       <svg className="edges" width={w} height={h} aria-hidden="true" focusable="false">
-        <g style={{ transform: `translate(${cam.x}px,${cam.y}px) scale(${cam.z})` }}>
+        <g style={transform}>
           <path className="relay-edge" d={geometry.relay} />
-          <path className="relay-dot" d={geometry.dots} />
+          {geometry.dots.map((d, i) => (
+            <g key={i} className={`depth-${i}`}>
+              <path className="relay-dot" d={d} />
+              <path className="relay-dot hole" d={d} />
+            </g>
+          ))}
           {crossEdges.map(([a, b], i) => {
             const lit = active !== 'root' && (a === active || b === active)
             const warm = hot === a || hot === b
@@ -88,18 +194,42 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
           {treeEdges.map(([a, b], i) => {
             const on = reached.has(b)
             const travelled = inPath.has(a) && inPath.has(b)
+            const spread = near.has(a) || near.has(b)
             const cls = `tree${on ? ' on' : ''}${travelled ? ' path' : ''}${view.dim.has(b) ? ' dim' : ''}${
-              hot === a || hot === b ? ' hot' : ''
+              hot === a || hot === b ? ' hot' : spread ? ' near' : ''
             }`
             return (
               <g key={b} data-section={sectionOf(b)}>
-                <path d={geometry.tree[i]} className={cls} />
+                <path d={geometry.tree[i]} className={cls} style={{ animationDelay: `${Math.round(dist(b) * 1.4)}ms` }} />
                 {travelled && <path d={geometry.tree[i]} className="signal" />}
               </g>
             )
           })}
+          <g className="flash">
+            {geometry.flash.map((d, g) => (
+              <path
+                key={g}
+                d={d}
+                style={{ animationDuration: `${3 + ((g * 7) % 5) * 0.9}s`, animationDelay: `-${((g * 1.73) % 8).toFixed(2)}s` }}
+              />
+            ))}
+          </g>
         </g>
       </svg>
+
+      {/* The same mesh in white, shown only under the cursor. */}
+      <svg className="edges glow" width={w} height={h} aria-hidden="true" focusable="false">
+        <g style={transform}>
+          <path d={geometry.relay} />
+          <path d={geometry.tree.join('')} />
+        </g>
+      </svg>
+
+      {leader && (
+        <svg className="leader" width={w} height={h} aria-hidden="true" focusable="false">
+          <path d={`M${lx} ${ly}H${panelEdge}`} />
+        </svg>
+      )}
 
       {nodes.map((n) => {
         const p = layout.pos[n.id]
@@ -125,8 +255,11 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
             // Dormant points are decoration until their branch opens.
             inert={!awake || offstage}
             aria-current={n.id === active ? 'page' : undefined}
-            style={{ transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)` }}
-            onPointerEnter={() => setHot(n.id)}
+            style={{
+              transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`,
+              ['--bd' as string]: `${Math.round(dist(n.id) * 1.4)}ms`,
+            }}
+            onPointerEnter={() => !drag.current?.moved && setHot(n.id)}
             onPointerLeave={() => setHot(null)}
             // Keyboard focus lights the node's connections; focus restored after a click does not.
             onFocus={(e) => e.currentTarget.matches(':focus-visible') && setHot(n.id)}
@@ -140,6 +273,16 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
           </a>
         )
       })}
+
+      <button
+        type="button"
+        className="see-all"
+        style={{ right: w - panelEdge + 16 }}
+        onPointerDown={(e) => e.stopPropagation()}
+        onClick={seeAll}
+      >
+        {user.all ? 'Back to focus' : 'See every neuron'}
+      </button>
     </nav>
   )
 })
