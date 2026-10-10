@@ -27,6 +27,12 @@ export const projects: AtlasNode[] = [
       'Visualization and compute also drew on deck.gl, CesiumJS, Modal, and Fireworks.',
     ],
     visual: 'nomos',
+    links: [
+      {
+        label: 'Hackathon project page',
+        url: 'https://www.aivalley.io/hackathons/hud-frontier-rsi-rl-environments-hackathon/projects/3b03a168-b363-460f-b062-c596177fce8a',
+      },
+    ],
     related: ['naigos', 'rl'],
     note: 'Source: Downloads/driving (SmoothRide/Clearway). Isaac execution layer with a frozen low level controller appears in the stack plan; do not claim it as built. Other compute integrations were discussed; do not claim equal implementation depth for each.',
   },
