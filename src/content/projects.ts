@@ -206,6 +206,7 @@ export const projects: AtlasNode[] = [
       'Broader investor and accelerator support are possible extensions, not built features.',
     ],
     flow: ['Discover programs', 'Rule based eligibility', 'Draft', 'Eight check claim gate'],
+    visual: 'kairos',
     related: ['cerno', 'leadership'],
   },
   {
