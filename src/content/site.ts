@@ -7,10 +7,12 @@ import type { Link } from './types.ts'
  */
 const contact: Record<string, string | undefined> = {
   Email: undefined, // 'mailto:you@example.com'
-  LinkedIn: undefined,
-  // https://github.com/N1tu-Mar returned 404 when this was built. Confirm the handle, then set it.
+  LinkedIn: 'https://www.linkedin.com/in/nityanth-maramreddy-7ba0a2208/',
+  Résumé:
+    'https://docs.google.com/document/d/1mI24ZZBwZTmtUI9f5EGQ-E3IOt4ETWhq/edit?usp=sharing&ouid=117823466610923543736&rtpof=true&sd=true',
+  // Main account: https://github.com/N1tu-Mar returned 404 (checked), so the handle is unconfirmed.
   GitHub: undefined,
-  Résumé: undefined, // e.g. './resume.pdf' once the file is in public/
+  'GitHub (second account)': 'https://github.com/Back-Nit1',
 }
 
 export const contactLinks: Link[] = Object.entries(contact).flatMap(([label, url]) =>
