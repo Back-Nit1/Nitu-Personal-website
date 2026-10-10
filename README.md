@@ -12,6 +12,7 @@ npm run dev      # local server
 npm run build    # typecheck, then production build into dist/
 npm run preview  # serve the production build
 npm run check    # content, route, and layout invariants
+npm run docs     # regenerate docs/projects/ from the site content
 ```
 
 `dist/` is plain static files with relative paths, so it deploys to any static host or subpath as is.
