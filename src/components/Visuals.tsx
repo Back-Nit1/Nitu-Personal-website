@@ -152,22 +152,25 @@ function Gate() {
 }
 
 function Covenant() {
-  const steps = [0, 1, 2]
   return (
-    <svg viewBox="0 0 320 160" role="img" aria-label="An escrow vault holding funds in layers, released one milestone at a time as evidence is posted">
-      <rect className="v-node" x="20" y="28" width="64" height="104" rx="6" />
+    <svg viewBox="0 0 320 160" role="img" aria-label="An escrow vault holding funds in layers, with each layer released to the creator once its milestone evidence is posted">
+      <rect className="v-node" x="20" y="24" width="64" height="104" rx="6" />
       {range(4).map((i) => (
-        <rect key={i} className={i === 3 ? 'v-soft' : 'v-fill'} x="28" y={36 + i * 23} width="48" height="17" rx="3" opacity={i === 3 ? 1 : 0.35 + i * 0.2} />
+        <rect key={i} className={i === 3 ? 'v-soft' : 'v-fill'} x="28" y={32 + i * 23} width="48" height="17" rx="3" opacity={i === 3 ? 1 : 0.35 + i * 0.2} />
       ))}
-      <text className="v-text" x="52" y="150" textAnchor="middle">escrow</text>
-      {steps.map((i) => (
-        <g key={i}>
-          <path className="v-line" d={`M${120 + i * 66} ${120 - i * 28}h54`} />
-          <path className="v-link" d={`M84 ${44 + i * 23}C ${100} ${44 + i * 23} ${110} ${110 - i * 28} ${147 + i * 66} ${110 - i * 28}`} />
-          <path className="v-ring" d={`M${147 + i * 66} ${72 - i * 28}v-20l12 6-12 6`} />
-          <text className="v-text" x={147 + i * 66} y={140} textAnchor="middle">{`step ${i + 1}`}</text>
-        </g>
-      ))}
+      <text className="v-text" x="52" y="148" textAnchor="middle">escrow</text>
+      {range(3).map((i) => {
+        const y = 40.5 + i * 23
+        return (
+          <g key={i}>
+            <path className="v-link" d={`M84 ${y}H${150 + i * 40}`} />
+            <rect className="v-node" x={150 + i * 40} y={y - 9} width="52" height="18" rx="9" />
+            <text className="v-tiny" x={176 + i * 40} y={y + 2.6} textAnchor="middle">{`milestone ${i + 1}`}</text>
+          </g>
+        )
+      })}
+      <path className="v-ring" d="M258 106l8 9 14-18" />
+      <text className="v-text" x="250" y="148" textAnchor="middle">evidence posted</text>
     </svg>
   )
 }
