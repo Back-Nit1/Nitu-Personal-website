@@ -117,6 +117,7 @@ export const projects: AtlasNode[] = [
       'The same scorer was wrapped as a reinforcement learning environment to probe how an optimizer could game a naive reward, which is why the scoring rules are kept deterministic and explicit.',
     ],
     visual: 'seqra',
+    links: [{ label: 'Live demo', url: 'https://seqra.netlify.app' }],
     related: ['neuroscience', 'meridian'],
     note: 'Sources: Downloads/Seqra spec, Downloads/SeqraRL. The RL environment is an exploration, not a shipped feature.',
   },
