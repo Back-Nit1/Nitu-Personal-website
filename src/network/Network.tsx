@@ -1,5 +1,5 @@
 import { memo, useMemo, useState } from 'react'
-import { nodes, get, childrenOf, crossEdges, leafCount, routeOf, sectionOf } from '../content/index.ts'
+import { nodes, get, childrenOf, crossEdges, leafCount, pathTo, routeOf, sectionOf } from '../content/index.ts'
 import { buildLayout, fit, viewOf, type Pt, type Rect } from './layout.ts'
 
 interface Props {
@@ -26,9 +26,7 @@ function subLabel(id: string): string | undefined {
   if (n.kind === 'root') return n.eyebrow
   if (!childrenOf(id).length) return undefined
   const c = leafCount(id)
-  return `${c} ${n.id === 'projects' || n.kind === 'group' ? 'project' : 'entr'}${
-    n.id === 'projects' || n.kind === 'group' ? (c === 1 ? '' : 's') : c === 1 ? 'y' : 'ies'
-  }`
+  return n.id === 'projects' || n.kind === 'group' ? `${c} projects` : `${c} entries`
 }
 
 export const Network = memo(function Network({ active, portrait, w, h, rect }: Props) {
@@ -54,6 +52,8 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
   const pad = portrait ? { x: 64, y: 58 } : { x: Math.min(150, rect.w * 0.17), y: 64 }
   const cam = fit(layout, view.focus, rect, pad, leaf ? active : undefined)
   const inPath = new Set(view.path)
+  // A connection is live when it leads somewhere awake, even through a resting point.
+  const reached = new Set([...view.awake].flatMap((id) => pathTo(id).map((n) => n.id)))
 
   return (
     <nav className="net" aria-label="Neural network">
@@ -74,7 +74,7 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
             )
           })}
           {treeEdges.map(([a, b], i) => {
-            const on = view.awake.has(b)
+            const on = reached.has(b)
             const travelled = inPath.has(a) && inPath.has(b)
             const cls = `tree${on ? ' on' : ''}${travelled ? ' path' : ''}${view.dim.has(b) ? ' dim' : ''}${
               hot === a || hot === b ? ' hot' : ''
@@ -94,7 +94,8 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
         const x = p.x * cam.z + cam.x
         const y = p.y * cam.z + cam.y
         const awake = view.awake.has(n.id)
-        const state = n.id === active ? 'active' : inPath.has(n.id) ? 'path' : awake ? 'awake' : 'dormant'
+        const state =
+          n.id === active ? 'active' : inPath.has(n.id) ? 'path' : awake ? 'awake' : reached.has(n.id) ? 'relay' : 'dormant'
         const sub = subLabel(n.id)
         const offstage = x < -8 || y < -8 || x > w + 8 || y > h + 8
         return (
@@ -120,7 +121,7 @@ export const Network = memo(function Network({ active, portrait, w, h, rect }: P
           >
             <span className="core" aria-hidden="true" />
             <span className="label">
-              <span className="name">{n.kind === 'root' ? n.title : n.title}</span>
+              <span className="name">{n.title}</span>
               {sub && <span className="sub">{sub}</span>}
             </span>
           </a>

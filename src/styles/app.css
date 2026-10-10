@@ -437,6 +437,7 @@ ul, ol {
 .node[data-kind='section'] { --d: 13px; }
 .node[data-kind='group'] { --d: 10px; }
 .node[data-state='dormant'] { --d: 4px; }
+.node[data-state='relay'] { --d: 6px; }
 
 .node[data-dim] {
   opacity: 0.42;
@@ -536,7 +537,8 @@ ul, ol {
   transition: opacity 260ms;
 }
 
-.node[data-state='dormant'] .label {
+.node[data-state='dormant'] .label,
+.node[data-state='relay'] .label {
   opacity: 0;
 }
 
@@ -550,7 +552,7 @@ ul, ol {
 .node[data-kind='group'] .name { font-size: 14px; font-weight: 600; }
 .node[data-kind='root'] .name { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
 
-.node[data-state='active'] .name {
+.node[data-state='active']:not([data-kind='root']) .name {
   font-weight: 700;
   text-decoration: underline;
   text-decoration-color: var(--accent);
