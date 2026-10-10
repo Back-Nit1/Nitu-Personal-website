@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "check": "node scripts/check.ts"
+    "check": "node scripts/check.ts",
+    "deploy:preview": "npm run check && vercel deploy",
+    "deploy": "npm run check && vercel deploy --prod"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.0.0",

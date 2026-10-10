@@ -10,3 +10,6 @@ prompt*.md
 graphify-out
 .claude/codemunch
 .codemunch
+
+# vercel project link
+.vercel
