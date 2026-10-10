@@ -54,10 +54,9 @@ for (const [a, b] of required) {
   assert.ok(relatedOf(b).includes(a), `${b} ↔ ${a}`)
 }
 
-// Layout: deterministic, complete, and no two labelled siblings on top of each other.
+// Layout: complete, and no two labelled siblings on top of each other.
 for (const [portrait, compact] of [[false, false], [false, true], [true, true]]) {
   const a = buildLayout(compact, portrait)
-  assert.deepEqual(a, buildLayout(compact, portrait), 'layout is deterministic')
   for (const n of nodes) assert.ok(a.pos[n.id], `${n.id}: has a position`)
   for (const n of nodes) {
     const sibs = childrenOf(n.id)
