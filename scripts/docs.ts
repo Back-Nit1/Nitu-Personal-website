@@ -13,7 +13,7 @@ for (const n of projects) {
   if (n.lead) out.push(`> ${n.lead}`, '')
   for (const p of n.body ?? []) out.push(p, '')
   if (n.contribution) out.push(`**My part.** ${n.contribution}`, '')
-  if (n.outcome) out.push(`**Outcome.** ${n.outcome}${n.context ? ` ${n.context}` : ''}`, '')
+  if (n.outcome) out.push(`**Outcome.** ${n.outcome}${n.context ? `. ${n.context}` : ''}`, '')
   if (n.recognition) out.push(`**Recognition.** ${n.recognition}`, '')
   if (n.stack?.length) out.push(`**Stack.** ${n.stack.join(', ')}`, '')
   if (n.flow?.length) out.push(`**Workflow.** ${n.flow.join(' → ')}`, '')
