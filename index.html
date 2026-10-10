@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nitu Maramreddy — Software, ML &amp; Connected Ideas</title>
+    <meta
+      name="description"
+      content="Nityanth (Nitu) Maramreddy is a Rutgers student building across software, machine learning, healthcare, and games. Explore his work through an interactive neural network."
+    />
+    <meta name="author" content="Nityanth Maramreddy" />
+    <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#10141d" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nitu Maramreddy — Software, ML &amp; Connected Ideas" />
+    <meta
+      property="og:description"
+      content="A curious mind, mapped out. Explore Nitu’s projects, experience, research, and interests through an interactive neural network."
+    />
+    <!-- Social crawlers need an absolute URL: once deployed, add og:url and prefix og:image with the site origin. -->
+    <meta property="og:image" content="./og.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <script>
+      // Set the appearance before first paint so there is no flash.
+      try {
+        var t = localStorage.getItem('theme')
+        document.documentElement.dataset.theme =
+          t === 'light' || t === 'dark' ? t : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <main style="max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>Nityanth “Nitu” Maramreddy</h1>
+        <p>Computer Science × Neuroscience at Rutgers–New Brunswick. I build across software, machine learning, healthcare, and games.</p>
+        <p>This site is an interactive map of my work and needs JavaScript to explore. In brief:</p>
+        <ul>
+          <li><strong>Projects:</strong> Nomos and Naigos (multi-agent reinforcement learning simulations); PALURA (shipped speech-driven learning games); Seqra (peptide research tooling); Meridian, Covenant, Kairos, Praedos, Cerno, Themis, Sentinel, MacroLeague, Auspex, Shorted, and smaller experiments.</li>
+          <li><strong>Experience:</strong> Neuropath, Star (YC S22), Centren Health, Penn Medicine, founder work, and campus leadership.</li>
+          <li><strong>Research:</strong> autonomy and learning, trustworthy agents, neuroscience, and computational research.</li>
+        </ul>
+      </main>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
