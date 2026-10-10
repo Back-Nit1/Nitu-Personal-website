@@ -1,5 +1,14 @@
-import { memo, useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from 'react'
-import { nodes, get, childrenOf, crossEdges, leafCount, pathTo, routeOf, sectionOf } from '../content/index.ts'
+import {
+  memo,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FocusEvent,
+  type PointerEvent as RPointerEvent,
+} from 'react'
+import { nodes, childrenOf, crossEdges, leafCount, pathTo, routeOf, sectionOf } from '../content/index.ts'
 import { buildLayout, fit, viewOf, type Pt, type Rect } from './layout.ts'
 
 interface Props {
@@ -22,6 +31,16 @@ const treeEdges = nodes.filter((n) => n.parent).map((n) => [n.parent!, n.id] as 
 const beat = (g: number) => ({ dur: 20 + ((g * 7) % 5) * 2.5, lag: (g * 3.17) % 20 })
 const TRAVEL = 0.25
 const allIds = nodes.map((n) => n.id)
+
+/** The quiet label under a node's title. Static, so computed once. */
+const subs = new Map(
+  nodes.map((n) => {
+    if (n.kind === 'root') return [n.id, n.eyebrow] as const
+    if (!childrenOf(n.id).length) return [n.id, undefined] as const
+    const c = leafCount(n.id)
+    return [n.id, n.id === 'projects' || n.kind === 'group' ? `${c} projects` : `${c} entries`] as const
+  }),
+)
 
 /** Deal the connections that carry signals into lanes, one beat each. */
 function lanes(layout: ReturnType<typeof buildLayout>) {
@@ -49,13 +68,61 @@ function lanes(layout: ReturnType<typeof buildLayout>) {
 /** The visitor's own camera move, applied on top of the one the route chose. */
 const HOME = { dx: 0, dy: 0, k: 1, all: false }
 
-function subLabel(id: string): string | undefined {
-  const n = get(id)
-  if (n.kind === 'root') return n.eyebrow
-  if (!childrenOf(id).length) return undefined
-  const c = leafCount(id)
-  return n.id === 'projects' || n.kind === 'group' ? `${c} projects` : `${c} entries`
+type Fire = { animationDuration: string; animationDelay: string }
+
+interface NodeProps {
+  id: string
+  title: string
+  sub?: string
+  href: string
+  kind: string
+  section?: string
+  side: string
+  state: string
+  dim: boolean
+  related: boolean
+  inert: boolean
+  current: boolean
+  x: number
+  y: number
+  delay: number
+  fire?: Fire
 }
+
+/** One neuron. Memoized on primitives, so hovering elsewhere never re-renders it. */
+const NodeLink = memo(function NodeLink(p: NodeProps) {
+  const style = {
+    transform: `translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px)`,
+    '--bd': `${p.delay}ms`,
+  } as CSSProperties
+  return (
+    <a
+      id={`node-${p.id}`}
+      href={p.href}
+      className="node"
+      style={style}
+      data-kind={p.kind}
+      data-section={p.section}
+      data-side={p.side}
+      data-state={p.state}
+      data-dim={p.dim || undefined}
+      data-related={p.related || undefined}
+      // Dormant points are decoration until their branch opens.
+      inert={p.inert}
+      aria-current={p.current ? 'page' : undefined}
+    >
+      <span className={`core${p.fire ? ' fires' : ''}`} style={p.fire} aria-hidden="true" />
+      <span className="label">
+        <span className="name">{p.title}</span>
+        {p.sub && <span className="sub">{p.sub}</span>}
+      </span>
+    </a>
+  )
+})
+
+/** The node id a pointer or focus event landed inside, if any. */
+const nodeIdOf = (t: EventTarget | null): string | null =>
+  (t as Element | null)?.closest?.('a.node')?.id.slice(5) ?? null
 
 export const Network = memo(function Network({ active, compact, portrait, w, h, rect }: Props) {
   const [hot, setHot] = useState<string | null>(null)
@@ -69,31 +136,47 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
 
   // Geometry lives in world space and is computed once per layout;
   // travelling only changes one transform on the group and one on each node.
-  const geometry = useMemo(
-    () => ({
-      tree: treeEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b])),
+  const geometry = useMemo(() => {
+    const { flash, laneOf } = lanes(layout)
+    const dist = (id: string) => Math.hypot(layout.pos[id].x, layout.pos[id].y)
+    const delay: Record<string, number> = {}
+    for (const n of nodes) delay[n.id] = Math.round(dist(n.id) * 1.4)
+    // When a signal lands on a neuron it ripples: same beat as the lane that feeds it,
+    // offset by roughly how long the dash takes to cross (~510px over the travel share of the beat).
+    const fire: Record<string, Fire> = {}
+    for (const [a, b] of treeEdges) {
+      const { dur, lag } = beat(laneOf[b])
+      const len = Math.hypot(layout.pos[a].x - layout.pos[b].x, layout.pos[a].y - layout.pos[b].y)
+      fire[b] = {
+        animationDuration: `${dur}s`,
+        animationDelay: `${(dur * TRAVEL * Math.min(1, (len + 9) / 510) - lag).toFixed(2)}s`,
+      }
+    }
+    const tree = treeEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b]))
+    return {
+      tree,
+      treeAll: tree.join(''),
       cross: crossEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b])),
       relay: layout.relayEdges.map(([a, b]) => line(a, b)).join(''),
       // Three depths of point: smaller and dimmer ones sit "behind".
       dots: [0, 1, 2].map((m) => layout.relays.filter((_, i) => i % 3 === m).map((p) => `M${p.x} ${p.y}h0`).join('')),
       // Signals: each branch's own connections in two lanes, in the branch colour,
       // plus a few quiet relay edges. Lanes fire on separate beats.
-      ...lanes(layout),
-    }),
-    [layout],
-  )
+      flash: flash.map((f, g) => ({ ...f, style: { animationDuration: `${beat(g).dur}s`, animationDelay: `-${beat(g).lag.toFixed(2)}s` } })),
+      delay,
+      fire,
+    }
+  }, [layout])
 
-  // When a signal lands on a neuron it ripples: same beat as the lane that feeds it,
-  // offset by roughly how long the dash takes to cross (~510px over the travel share of the beat).
-  const ripple = useMemo(() => {
-    const out: Record<string, { animationDuration: string; animationDelay: string }> = {}
-    treeEdges.forEach(([a, b]) => {
-      const { dur, lag } = beat(geometry.laneOf[b])
-      const len = Math.hypot(layout.pos[a].x - layout.pos[b].x, layout.pos[a].y - layout.pos[b].y)
-      out[b] = { animationDuration: `${dur}s`, animationDelay: `${(dur * TRAVEL * Math.min(1, (len + 9) / 510) - lag).toFixed(2)}s` }
-    })
-    return out
-  }, [layout, geometry])
+  // Which connections are lit depends only on the route, not on the pointer.
+  const { inPath, reached } = useMemo(
+    () => ({
+      inPath: new Set(view.path),
+      // A connection is live when it leads somewhere awake, even through a resting point.
+      reached: new Set([...view.awake].flatMap((id) => pathTo(id).map((n) => n.id))),
+    }),
+    [view],
+  )
 
   // A new destination starts from its own framing again.
   useEffect(() => setUser(HOME), [active, compact])
@@ -138,9 +221,6 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
     y: (base.y - cy) * user.k + cy + user.dy,
     z: base.z * user.k,
   }
-  const inPath = new Set(view.path)
-  // A connection is live when it leads somewhere awake, even through a resting point.
-  const reached = new Set([...view.awake].flatMap((id) => pathTo(id).map((n) => n.id)))
   // One hop beyond the hovered point: the signal spreads outward.
   const near = new Set<string>()
   if (hot)
@@ -148,7 +228,6 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
       if (a === hot) near.add(b)
       if (b === hot) near.add(a)
     }
-  const dist = (id: string) => Math.hypot(layout.pos[id].x, layout.pos[id].y)
   const transform = { transform: `translate(${cam.x}px,${cam.y}px) scale(${cam.z})` }
 
   const limit = (v: number, m: number) => Math.max(-m, Math.min(m, v))
@@ -179,6 +258,19 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
     drag.current = null
     setDragging(false)
   }
+  // Hover and focus are delegated: one handler here instead of four closures per node.
+  const onPointerOver = (e: RPointerEvent<HTMLElement>) => {
+    const id = nodeIdOf(e.target)
+    if (id && !drag.current?.moved) setHot(id)
+  }
+  const onPointerOut = (e: RPointerEvent<HTMLElement>) => {
+    if (nodeIdOf(e.target) && nodeIdOf(e.relatedTarget) !== nodeIdOf(e.target)) setHot(null)
+  }
+  // Keyboard focus lights the node's connections; focus restored after a click does not.
+  const onFocus = (e: FocusEvent<HTMLElement>) => {
+    const id = nodeIdOf(e.target)
+    if (id && (e.target as Element).matches(':focus-visible')) setHot(id)
+  }
   const seeAll = () => {
     if (user.all) return setUser(HOME)
     const all = fit(layout, allIds, rect, { x: 44, y: 78 })
@@ -203,6 +295,10 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
       onPointerMove={onPointerMove}
       onPointerUp={onPointerEnd}
       onPointerCancel={onPointerEnd}
+      onPointerOver={onPointerOver}
+      onPointerOut={onPointerOut}
+      onFocus={onFocus}
+      onBlur={() => setHot(null)}
       onDragStart={(e) => e.preventDefault()}
     >
       <svg className="edges" width={w} height={h} aria-hidden="true" focusable="false">
@@ -235,19 +331,14 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
             }`
             return (
               <g key={b} data-section={sectionOf(b)}>
-                <path d={geometry.tree[i]} className={cls} style={{ animationDelay: `${Math.round(dist(b) * 1.4)}ms` }} />
+                <path d={geometry.tree[i]} className={cls} style={{ animationDelay: `${geometry.delay[b]}ms` }} />
                 {travelled && <path d={geometry.tree[i]} className="signal" />}
               </g>
             )
           })}
           <g className="flash">
-            {geometry.flash.map(({ d, section }, g) => (
-              <path
-                key={g}
-                d={d}
-                data-section={section}
-                style={{ animationDuration: `${beat(g).dur}s`, animationDelay: `-${beat(g).lag.toFixed(2)}s` }}
-              />
+            {geometry.flash.map(({ d, section, style }, g) => (
+              <path key={g} d={d} data-section={section} style={style} />
             ))}
           </g>
         </g>
@@ -257,7 +348,7 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
       <svg className="edges glow" width={w} height={h} aria-hidden="true" focusable="false">
         <g style={transform}>
           <path d={geometry.relay} />
-          <path d={geometry.tree.join('')} />
+          <path d={geometry.treeAll} />
         </g>
       </svg>
 
@@ -274,39 +365,27 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
         const awake = view.awake.has(n.id)
         const state =
           n.id === active ? 'active' : inPath.has(n.id) ? 'path' : awake ? 'awake' : reached.has(n.id) ? 'relay' : 'dormant'
-        const sub = subLabel(n.id)
         const offstage = x < -8 || y < -8 || x > w + 8 || y > h + 8
         return (
-          <a
+          <NodeLink
             key={n.id}
-            id={`node-${n.id}`}
+            id={n.id}
+            title={n.title}
+            sub={subs.get(n.id)}
             href={routeOf(n.id)}
-            className="node"
-            data-kind={n.kind}
-            data-section={sectionOf(n.id)}
-            data-side={layout.side[n.id]}
-            data-state={state}
-            data-dim={view.dim.has(n.id) || undefined}
-            data-related={(awake && view.related.has(n.id)) || undefined}
-            // Dormant points are decoration until their branch opens.
+            kind={n.kind}
+            section={sectionOf(n.id)}
+            side={layout.side[n.id]}
+            state={state}
+            dim={view.dim.has(n.id)}
+            related={awake && view.related.has(n.id)}
             inert={!awake || offstage}
-            aria-current={n.id === active ? 'page' : undefined}
-            style={{
-              transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`,
-              ['--bd' as string]: `${Math.round(dist(n.id) * 1.4)}ms`,
-            }}
-            onPointerEnter={() => !drag.current?.moved && setHot(n.id)}
-            onPointerLeave={() => setHot(null)}
-            // Keyboard focus lights the node's connections; focus restored after a click does not.
-            onFocus={(e) => e.currentTarget.matches(':focus-visible') && setHot(n.id)}
-            onBlur={() => setHot(null)}
-          >
-            <span className={`core${ripple[n.id] ? ' fires' : ''}`} style={ripple[n.id]} aria-hidden="true" />
-            <span className="label">
-              <span className="name">{n.title}</span>
-              {sub && <span className="sub">{sub}</span>}
-            </span>
-          </a>
+            current={n.id === active}
+            x={x}
+            y={y}
+            delay={geometry.delay[n.id]}
+            fire={geometry.fire[n.id]}
+          />
         )
       })}
 
