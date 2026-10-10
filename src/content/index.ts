@@ -16,35 +16,52 @@ export const get = (id: string): AtlasNode => {
   return n
 }
 
+// The content is static, so every derived lookup is computed once at load.
+// Render code then reads from these tables instead of walking the tree.
+
 const kids = new Map<string, AtlasNode[]>()
 for (const n of nodes) {
   if (!n.parent) continue
-  kids.set(n.parent, [...(kids.get(n.parent) ?? []), n])
+  const list = kids.get(n.parent)
+  if (list) list.push(n)
+  else kids.set(n.parent, [n])
 }
-export const childrenOf = (id: string): AtlasNode[] => kids.get(id) ?? []
+const none: AtlasNode[] = []
+export const childrenOf = (id: string): AtlasNode[] => kids.get(id) ?? none
 
-/** Root first, the node itself last. */
-export function pathTo(id: string): AtlasNode[] {
-  const out: AtlasNode[] = []
-  for (let n: AtlasNode | undefined = get(id); n; n = n.parent ? get(n.parent) : undefined) out.unshift(n)
-  return out
+const paths = new Map<string, AtlasNode[]>()
+function buildPath(n: AtlasNode): AtlasNode[] {
+  let p = paths.get(n.id)
+  if (!p) {
+    p = n.parent ? [...buildPath(get(n.parent)), n] : [n]
+    paths.set(n.id, p)
+  }
+  return p
 }
+for (const n of nodes) buildPath(n)
+
+/** Root first, the node itself last. Shared and cached: treat as read only. */
+export const pathTo = (id: string): AtlasNode[] => paths.get(id) ?? buildPath(get(id))
 
 /** The top-level branch a node lives under; drives its accent. */
 export const sectionOf = (id: string): SectionId | undefined => pathTo(id)[1]?.id as SectionId | undefined
 
+const leaves = new Map<string, number>()
+function countLeaves(id: string): number {
+  let c = leaves.get(id)
+  if (c === undefined) {
+    c = childrenOf(id).reduce((sum, k) => sum + (childrenOf(k.id).length ? countLeaves(k.id) : 1), 0)
+    leaves.set(id, c)
+  }
+  return c
+}
 /** Number of projects or entries beneath a node. */
-export const leafCount = (id: string): number =>
-  childrenOf(id).reduce((sum, c) => sum + (childrenOf(c.id).length ? leafCount(c.id) : 1), 0)
+export const leafCount = countLeaves
 
 // --- Routes: one canonical hash route per node ---
 
-export const routeOf = (id: string): string =>
-  '#/' +
-  pathTo(id)
-    .slice(1)
-    .map((n) => n.slug ?? n.id)
-    .join('/')
+const routes = new Map(nodes.map((n) => [n.id, '#/' + pathTo(n.id).slice(1).map((p) => p.slug ?? p.id).join('/')]))
+export const routeOf = (id: string): string => routes.get(id) ?? '#/'
 
 const byRoute = new Map(nodes.map((n) => [routeOf(n.id), n.id]))
 const bySlug = new Map(nodes.map((n) => [n.slug ?? n.id, n.id]))
@@ -70,8 +87,10 @@ for (const n of nodes) {
   }
 }
 
+const relatedIds = new Map([...linked].map(([id, set]) => [id, [...set]]))
+const noIds: string[] = []
 /** A node's own connections first, then the ones that point back at it. */
-export const relatedOf = (id: string): string[] => [...(linked.get(id) ?? [])]
+export const relatedOf = (id: string): string[] => relatedIds.get(id) ?? noIds
 
 export const crossEdges: [string, string][] = [...linked].flatMap(([a, set]) =>
   [...set].filter((b) => a < b && get(a).parent !== b && get(b).parent !== a).map((b) => [a, b] as [string, string]),
