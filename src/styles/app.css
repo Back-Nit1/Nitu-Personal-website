@@ -69,6 +69,7 @@ ul, ol {
 /* ---------- Shell ---------- */
 
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
@@ -86,10 +87,6 @@ ul, ol {
   position: relative;
   flex: 1 1 auto;
   min-height: 430px;
-  /* A faint dot grid and a soft glow where nitu sits. */
-  background:
-    radial-gradient(ellipse 46% 52% at 50% 50%, var(--glow), transparent 72%),
-    radial-gradient(circle, var(--line) 1px, transparent 1.2px) 0 0 / 26px 26px;
 }
 
 .app[data-open] .stage {
@@ -102,13 +99,15 @@ ul, ol {
   display: none;
 }
 
+/* Clear of the breadcrumb that floats at the bottom edge. */
 #reading {
-  padding: 0 12px 20px;
+  padding-bottom: 72px;
 }
 
 @media (min-width: 900px) {
   .app {
     height: 100dvh;
+    overflow: clip;
   }
 
   .stage,
@@ -121,122 +120,61 @@ ul, ol {
 
   #reading {
     position: absolute;
-    inset: 12px 12px 12px auto;
-    width: var(--panel-w);
+    inset: 0 0 0 auto;
+    width: calc(var(--panel-w) + 12px);
     padding: 0;
   }
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header: a mark in the corner, not a bar ---------- */
 
 .head {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 14px 20px 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 18px 20px;
+  pointer-events: none;
 }
 
 .identity {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  align-items: baseline;
+  gap: 12px;
   text-decoration: none;
   min-height: 44px;
+  pointer-events: auto;
 }
 
 .mono-mark {
-  font: 500 19px/1 var(--mono);
+  font: 500 17px/1 var(--mono);
   letter-spacing: -0.04em;
 }
 
-.mono-mark i {
-  font-style: normal;
-  color: var(--teal);
-}
-
-.identity-text {
-  display: grid;
-  gap: 3px;
-  padding-left: 14px;
-  border-left: 1px solid var(--line);
-}
-
 .head h1 {
-  font: 600 13px/1.2 var(--sans);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.tagline {
-  font: 400 11px/1.3 var(--mono);
-  letter-spacing: 0.08em;
+  font: 400 11px/1.2 var(--mono);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.quiet {
-  margin-left: auto;
-  font-size: 13.5px;
-  color: var(--muted);
-}
-
-.theme {
-  margin-left: auto;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font: 400 11px/1 var(--mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-  transition: color var(--quick), border-color var(--quick);
-}
-
-.quiet + .theme {
-  margin-left: 0;
-}
-
-.theme:hover {
-  color: var(--ink);
-  border-color: var(--line-strong);
-}
-
-@media (max-width: 899px) {
-  .quiet {
-    display: none;
-  }
-  .quiet + .theme {
-    margin-left: auto;
-  }
 }
 
 @media (max-width: 479px) {
   .head {
-    padding: 10px 14px 8px;
-    gap: 10px;
-  }
-  .identity {
-    gap: 10px;
-  }
-  .identity-text {
-    padding-left: 10px;
+    padding: 10px 14px;
   }
   .head h1 {
-    font-size: 11.5px;
-    letter-spacing: 0.1em;
-  }
-  .tagline {
-    font-size: 11px;
-    letter-spacing: 0.02em;
-  }
-  .theme {
-    min-height: 44px;
+    letter-spacing: 0.08em;
   }
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer: breadcrumbs floating over the graph ---------- */
+
+#sections {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 4;
+  pointer-events: none;
+}
 
 .foot {
   display: flex;
@@ -244,16 +182,13 @@ ul, ol {
   align-items: center;
   justify-content: space-between;
   gap: 6px 24px;
-  padding: 10px 20px 12px;
-  border-top: 1px solid var(--line);
-  background: var(--bg);
+  padding: 26px 20px 8px;
+  background: linear-gradient(to top, var(--bg) 35%, transparent);
   font: 400 12px/1.4 var(--mono);
 }
 
-#sections {
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
+.foot a {
+  pointer-events: auto;
 }
 
 .crumbs {
@@ -276,7 +211,7 @@ ul, ol {
 }
 
 .crumbs a,
-.direct a {
+.index-link {
   color: var(--muted);
   text-decoration: none;
   padding: 6px 0;
@@ -285,13 +220,8 @@ ul, ol {
 }
 
 .crumbs a:hover,
-.direct a:hover {
+.index-link:hover {
   color: var(--ink);
-}
-
-.crumbs li:first-child a::before {
-  content: '◎ ';
-  color: var(--teal);
 }
 
 .crumbs [aria-current] {
@@ -305,26 +235,21 @@ ul, ol {
   color: var(--muted);
 }
 
-.direct {
-  max-width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.direct ul {
-  display: flex;
-  gap: 18px;
-  white-space: nowrap;
-}
-
-.direct a[aria-current] {
-  color: var(--ink);
-  box-shadow: inset 0 -2px 0 var(--accent);
+@media (min-width: 900px) {
+  /* Over the graph the labels carry their own halo; no wash needed. */
+  .foot {
+    background: none;
+    padding-bottom: 14px;
+  }
+  /* Beside the reading sheet, the footer stays in the graph's half. */
+  .app[data-open] #sections {
+    right: calc(var(--panel-w) + 12px);
+  }
 }
 
 @media (max-width: 479px) {
   .foot {
-    padding: 6px 14px 8px;
+    padding: 22px 14px 6px;
   }
   .hint {
     display: none;
@@ -337,12 +262,65 @@ ul, ol {
   position: absolute;
   inset: 0;
   overflow: clip;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* While dragging, the view follows the pointer with no easing. */
+.net.dragging {
+  cursor: grabbing;
+}
+
+.net.dragging .edges > g,
+.net.dragging .node {
+  transition: none;
+}
+
+@keyframes boot {
+  from { opacity: 0; }
+}
+
+/* A slow drift so the field is never perfectly still. */
+@keyframes drift {
+  from { translate: -5px 3px; }
+  to { translate: 5px -3px; }
 }
 
 .edges {
   position: absolute;
   inset: 0;
   overflow: visible;
+  pointer-events: none;
+  animation: drift 50s ease-in-out infinite alternate;
+}
+
+/* The mesh in white, revealed within reach of the cursor. */
+.glow {
+  --mx: -999px;
+  --my: -999px;
+  -webkit-mask-image: radial-gradient(circle 150px at var(--mx) var(--my), #000, transparent);
+  mask-image: radial-gradient(circle 150px at var(--mx) var(--my), #000, transparent);
+}
+
+.glow path {
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+
+.leader {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.leader path {
+  fill: none;
+  stroke: var(--edge-on);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  vector-effect: non-scaling-stroke;
 }
 
 .edges > g {
@@ -358,58 +336,109 @@ ul, ol {
 }
 
 .relay-edge {
-  stroke: var(--line);
+  stroke: var(--edge);
   stroke-width: 1;
-  opacity: 0.75;
 }
 
+/* Relay points draw as rings: a white dot with a black one on top. */
 .relay-dot {
-  stroke: var(--relay);
-  stroke-width: 3;
+  stroke: #fff;
+  stroke-width: 7;
 }
 
+.relay-dot.hole {
+  stroke: var(--bg);
+  stroke-width: 4;
+}
+
+/* Depth: the small, dim points sit behind the larger, brighter ones. */
+.depth-0 { opacity: 0.5; }
+.depth-0 .relay-dot { stroke-width: 5; }
+.depth-0 .hole { stroke-width: 2; }
+.depth-1 { opacity: 0.75; }
+.depth-2 .relay-dot { stroke-width: 8; }
+.depth-2 .hole { stroke-width: 5; }
+
+.depth-0, .depth-1, .depth-2 {
+  animation: boot 900ms var(--ease) 500ms backwards;
+}
+
+.relay-edge,
+.tree {
+  animation: boot 700ms var(--ease) backwards;
+}
+
+.relay-edge {
+  animation-delay: 300ms;
+}
+
+/* Electrical signals: a short bright dash runs the length of an edge, then rests. */
+.flash {
+  filter: drop-shadow(0 0 3px #fff);
+}
+
+.flash path {
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-dasharray: 9 500;
+  animation: flash 4s linear infinite;
+}
+
+@keyframes flash {
+  from { stroke-dashoffset: 9; }
+  40%, to { stroke-dashoffset: -500; }
+}
+
+/* Cross-links stay out of sight until a node is hovered or open. */
 .cross {
-  stroke: var(--line-strong);
+  stroke: var(--edge);
   stroke-width: 1;
-  stroke-dasharray: 1 6;
-  opacity: 0.55;
+  stroke-dasharray: 2 5;
+  opacity: 0;
 }
 
-.cross.hot {
+.cross.hot,
+.cross.lit {
   opacity: 1;
 }
 
+.cross.hot {
+  stroke: var(--edge-on);
+}
+
 .cross.lit {
-  stroke: var(--accent);
-  stroke-width: 1.4;
-  stroke-dasharray: 2 5;
-  opacity: 0.95;
+  stroke: #fff;
+  stroke-width: 1.3;
 }
 
 .tree {
-  stroke: var(--line);
+  stroke: var(--edge);
   stroke-width: 1;
 }
 
 .tree.on {
-  stroke: color-mix(in srgb, var(--accent) 50%, var(--line-strong));
-  stroke-width: 1.25;
+  stroke: var(--edge-on);
 }
 
 .tree.dim {
   opacity: 0.4;
 }
 
+.tree.near {
+  stroke: var(--edge-on);
+  transition-delay: 90ms;
+}
+
 .tree.hot,
 .tree.path {
-  stroke: var(--accent);
-  stroke-width: 1.9;
+  stroke: #fff;
+  stroke-width: 1.6;
   opacity: 1;
 }
 
 /* A sparse signal travelling outward along the chosen path. */
 .signal {
-  stroke: var(--accent);
+  stroke: #fff;
   stroke-width: 5;
   stroke-dasharray: 0.1 220;
   animation: signal 2.8s linear infinite;
@@ -432,14 +461,18 @@ ul, ol {
   place-items: center;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
   transition: transform var(--travel) var(--ease), opacity 300ms;
+  animation:
+    boot 700ms var(--ease) var(--bd, 0ms) backwards,
+    drift 50s ease-in-out infinite alternate;
 }
 
 .node[data-kind='root'] { --d: 20px; z-index: 1; }
-.node[data-kind='section'] { --d: 13px; }
-.node[data-kind='group'] { --d: 10px; }
-.node[data-state='dormant'] { --d: 4px; }
-.node[data-state='relay'] { --d: 6px; }
+.node[data-kind='section'] { --d: 14px; }
+.node[data-kind='group'] { --d: 11px; }
+.node[data-state='dormant'] { --d: 7px; }
+.node[data-state='relay'] { --d: 7px; }
 
 .node[data-dim] {
   opacity: 0.42;
@@ -455,44 +488,35 @@ ul, ol {
   outline: 0;
 }
 
+/* Every neuron is a hollow white ring on black. */
 .core {
   position: relative;
   width: var(--d);
   height: var(--d);
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+  background: var(--bg);
+  border: 1.5px solid #fff;
   transition: width var(--quick), height var(--quick), box-shadow var(--quick), transform var(--quick), background var(--quick);
-}
-
-.node[data-state='dormant'] .core {
-  background: var(--relay);
-  box-shadow: none;
 }
 
 .node:hover .core,
 .node:focus-visible .core {
   transform: scale(1.3);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 26%, transparent);
 }
 
 .node:focus-visible .core {
-  outline: 2px solid var(--ink);
-  outline-offset: 7px;
+  outline: 2px solid #fff;
+  outline-offset: 5px;
 }
 
-.node[data-state='path'] .core,
-.node[data-state='active'] .core {
-  box-shadow:
-    0 0 0 4px var(--bg),
-    0 0 0 5.5px var(--accent);
+.node[data-state='path'] .core {
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px #fff;
 }
 
+/* Where the visitor is: a filled neuron. */
 .node[data-state='active'] .core {
-  box-shadow:
-    0 0 0 4px var(--bg),
-    0 0 0 5.5px var(--accent),
-    0 0 0 13px color-mix(in srgb, var(--accent) 14%, transparent);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px #fff;
 }
 
 /* Connected to the current entry: marked by a dashed ring, not colour alone. */
@@ -500,32 +524,17 @@ ul, ol {
   content: '';
   position: absolute;
   inset: -7px;
-  border: 1px dashed var(--accent);
+  border: 1px dashed #fff;
   border-radius: 50%;
 }
 
-/* nitu: concentric rings and a soft glow. */
-.node[data-kind='root'] .core {
-  box-shadow: 0 0 34px 6px color-mix(in srgb, var(--accent) 30%, transparent);
-}
-
-.node[data-kind='root'] .core::before,
-.node[data-kind='root'] .core::after {
+/* nitu: one outer ring. */
+.node[data-kind='root'] .core::before {
   content: '';
   position: absolute;
-  inset: -9px;
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  inset: -8px;
+  border: 1px solid var(--edge-on);
   border-radius: 50%;
-}
-
-.node[data-kind='root'] .core::after {
-  inset: -19px;
-  border-color: color-mix(in srgb, var(--accent) 24%, transparent);
-  animation: breathe 7s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  50% { transform: scale(1.12); opacity: 0.4; }
 }
 
 .label {
@@ -546,29 +555,39 @@ ul, ol {
 
 .name {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
+  font: 400 12.5px/1.25 var(--mono);
+  letter-spacing: 0.01em;
 }
 
-.node[data-kind='section'] .name { font-size: 15.5px; font-weight: 600; }
-.node[data-kind='group'] .name { font-size: 14px; font-weight: 600; }
-.node[data-kind='root'] .name { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+/* Hierarchy by face: serif for branches, mono for everything beneath. */
+.node[data-kind='section'] .name { font: italic 400 24px/1.05 var(--serif); letter-spacing: 0; }
+.node[data-kind='group'] .name { font: 500 11.5px/1.25 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.node[data-kind='root'] .name { font: italic 400 56px/0.95 var(--serif); letter-spacing: -0.01em; }
 
 .node[data-state='active']:not([data-kind='root']) .name {
-  font-weight: 700;
   text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  text-decoration-color: #fff;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
 }
 
+/* Counts stay out of the way until a neuron is looked at. */
 .sub {
   display: block;
-  margin-top: 3px;
-  font: 400 11px/1.2 var(--mono);
-  letter-spacing: 0.08em;
+  margin-top: 4px;
+  font: 400 10.5px/1.2 var(--mono);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
+  opacity: 0;
+  transition: opacity var(--quick);
+}
+
+.node:hover .sub,
+.node:focus-visible .sub,
+.node[data-state='active'] .sub,
+.node[data-kind='root'] .sub {
+  opacity: 1;
 }
 
 .node[data-side='below'] .label { top: calc(50% + var(--d) / 2 + 10px); left: 50%; translate: -50% 0; text-align: center; }
@@ -576,20 +595,44 @@ ul, ol {
 .node[data-side='right'] .label { left: calc(50% + var(--d) / 2 + 11px); top: 50%; translate: 0 -50%; }
 .node[data-side='left'] .label { right: calc(50% + var(--d) / 2 + 11px); top: 50%; translate: 0 -50%; text-align: right; }
 
-.node[data-kind='root'] .label { top: calc(50% + 34px); }
+.node[data-kind='root'] .label { top: calc(50% + 30px); }
 
 @media (max-width: 719px) {
   .node[data-kind='root'] .sub { display: none; }
+  .node[data-kind='root'] .name { font-size: 42px; }
+  .node[data-kind='section'] .name { font-size: 21px; }
+}
+
+/* ---------- View controls ---------- */
+
+.see-all {
+  position: absolute;
+  top: 14px;
+  z-index: 2;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  background: rgb(0 0 0 / 0.6);
+  font: 400 11px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--quick), border-color var(--quick);
+}
+
+.see-all:hover {
+  color: #fff;
+  border-color: #fff;
 }
 
 /* ---------- Reading panel ---------- */
 
 .panel {
   --pad: 28px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: 0 18px 50px -30px rgb(0 0 0 / 0.35);
+  background: rgb(0 0 0 / 0.9);
+  border-top: 1px solid var(--line-strong);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 @media (min-width: 900px) {
@@ -597,6 +640,8 @@ ul, ol {
     height: 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
+    border-top: 0;
+    border-left: 1px solid var(--line-strong);
     animation: arrive 360ms var(--ease);
   }
 }
@@ -614,8 +659,7 @@ ul, ol {
   display: flex;
   justify-content: space-between;
   padding: 8px calc(var(--pad) - 8px);
-  background: var(--surface);
-  border-radius: 18px 18px 0 0;
+  background: transparent;
   font: 400 12px/1 var(--mono);
   letter-spacing: 0.04em;
 }
@@ -660,19 +704,17 @@ ul, ol {
 }
 
 .reading h2 {
-  margin-top: 8px;
-  font-size: clamp(28px, 2.6vw + 14px, 36px);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  margin-top: 10px;
+  font: 400 clamp(40px, 3vw + 22px, 58px) / 1 var(--serif);
+  letter-spacing: -0.01em;
   outline: 0;
 }
 
 .lead {
-  font-size: 18.5px;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.005em;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
 }
 
 .reading h3 {
@@ -693,17 +735,14 @@ ul, ol {
 }
 
 .fact {
-  display: grid;
-  grid-template-columns: 104px 1fr;
-  gap: 12px;
-  padding: 13px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
 
 .fact dt {
-  padding-top: 3px;
-  font: 400 11px/1.4 var(--mono);
-  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  font: 400 10.5px/1.4 var(--mono);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }

@@ -1,59 +1,28 @@
+/* One appearance: white points and hairlines on black. */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --bg: #f5f4ef;
-  --surface: #fdfcf8;
-  --ink: #252d35;
-  --muted: #5a646e;
-  --line: rgb(37 45 53 / 0.15);
-  --line-strong: rgb(37 45 53 / 0.34);
-  --relay: rgb(37 45 53 / 0.3);
-  --glow: rgb(23 119 111 / 0.09);
+  --bg: #000;
+  --surface: #0a0a0a;
+  --ink: #f2f2f2;
+  --muted: #9a9a9a;
+  --line: rgb(255 255 255 / 0.16);
+  --line-strong: rgb(255 255 255 / 0.4);
+  --edge: #5c5c5c;
+  --edge-on: #b4b4b4;
 
-  /* Branch identities. Each is always paired with a label; never colour alone. */
-  --teal: #17776f;
-  --c-story: #94570a;
-  --c-experience: #6a4fc7;
-  --c-projects: #0b7394;
-  --c-research: #bd432e;
-  --c-offduty: #3b7629;
-  --c-connect: var(--teal);
-  --accent: var(--teal);
+  /* Branch identity comes from position and labels, not colour. */
+  --accent: #fff;
+  --teal: #fff;
 
-  --sans: 'Space Grotesk Variable', 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   --travel: 620ms;
   --quick: 180ms;
   --ease: cubic-bezier(0.45, 0.05, 0.2, 1);
 }
-
-:root[data-theme='dark'] {
-  color-scheme: dark;
-
-  --bg: #10141d;
-  --surface: #171d29;
-  --ink: #e7edf7;
-  --muted: #9ba8bc;
-  --line: rgb(231 237 247 / 0.14);
-  --line-strong: rgb(231 237 247 / 0.36);
-  --relay: rgb(231 237 247 / 0.32);
-  --glow: rgb(113 221 202 / 0.08);
-
-  --teal: #71ddca;
-  --c-story: #f0b65a;
-  --c-experience: #b7a6ff;
-  --c-projects: #6fd0f2;
-  --c-research: #ff9a88;
-  --c-offduty: #9bd67f;
-}
-
-[data-section='story'] { --accent: var(--c-story); }
-[data-section='experience'] { --accent: var(--c-experience); }
-[data-section='projects'] { --accent: var(--c-projects); }
-[data-section='research'] { --accent: var(--c-research); }
-[data-section='offduty'] { --accent: var(--c-offduty); }
-[data-section='connect'] { --accent: var(--c-connect); }
 
 @media (prefers-reduced-motion: reduce) {
   :root {

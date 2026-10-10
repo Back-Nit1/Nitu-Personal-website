@@ -3,11 +3,10 @@ import { get, pathTo, routeOf } from '../content/index.ts'
 import { Network } from '../network/Network.tsx'
 import { Header, Footer } from '../components/Chrome.tsx'
 import { Panel } from '../components/Panel.tsx'
-import { useMedia, useRoute, useSize, useTheme } from './hooks.ts'
+import { useMedia, useRoute, useSize } from './hooks.ts'
 
 export function App() {
   const route = useRoute()
-  const [theme, toggleTheme] = useTheme()
   // Wide: the reading panel sits beside the graph. Otherwise it follows in document flow.
   const wide = useMedia('(min-width: 900px)')
   const portrait = useMedia('(max-width: 719px)')
@@ -68,7 +67,7 @@ export function App() {
   return (
     <div className="app" data-open={open || undefined} style={{ '--panel-w': `${panelW}px` } as React.CSSProperties}>
       <a className="skip" href={open ? '#reading' : '#sections'}>Skip the network</a>
-      <Header theme={theme} onToggleTheme={toggleTheme} />
+      <Header />
       <main className="main">
         <div className="stage" ref={stageRef}>
           <Network active={id} compact={!wide} portrait={portrait} w={w} h={h} rect={rect} />

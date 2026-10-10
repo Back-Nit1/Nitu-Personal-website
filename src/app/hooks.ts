@@ -45,49 +45,6 @@ export function useRoute(): Route & { depth: number } {
   return { ...route, depth: depth() }
 }
 
-// --- Appearance ---
-
-type Theme = 'light' | 'dark'
-const dark = matchMedia('(prefers-color-scheme: dark)')
-
-function stored(): Theme | null {
-  try {
-    const t = localStorage.getItem('theme')
-    return t === 'light' || t === 'dark' ? t : null
-  } catch {
-    return null
-  }
-}
-
-/** Follows the system until the visitor chooses; then remembers the choice. */
-export function useTheme(): [Theme, () => void] {
-  const [theme, setTheme] = useState<Theme>(() => stored() ?? (dark.matches ? 'dark' : 'light'))
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-  }, [theme])
-
-  useEffect(() => {
-    const onSystem = () => stored() ?? setTheme(dark.matches ? 'dark' : 'light')
-    dark.addEventListener('change', onSystem)
-    return () => dark.removeEventListener('change', onSystem)
-  }, [])
-
-  const toggle = useCallback(() => {
-    setTheme((t) => {
-      const next = t === 'dark' ? 'light' : 'dark'
-      try {
-        localStorage.setItem('theme', next)
-      } catch {
-        // Private mode: the choice lasts for this visit.
-      }
-      return next
-    })
-  }, [])
-
-  return [theme, toggle]
-}
-
 // --- Measurement ---
 
 export function useMedia(query: string): boolean {

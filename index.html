@@ -9,8 +9,7 @@
       content="Nityanth (Nitu) Maramreddy is a Rutgers student building across software, machine learning, healthcare, and games. Explore his work through an interactive neural network."
     />
     <meta name="author" content="Nityanth Maramreddy" />
-    <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#10141d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#000000" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Nitu Maramreddy — Software, ML &amp; Connected Ideas" />
     <meta
@@ -21,14 +20,6 @@
     <meta property="og:image" content="./og.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <script>
-      // Set the appearance before first paint so there is no flash.
-      try {
-        var t = localStorage.getItem('theme')
-        document.documentElement.dataset.theme =
-          t === 'light' || t === 'dark' ? t : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      } catch (e) {}
-    </script>
   </head>
   <body>
     <div id="root"></div>
