@@ -146,6 +146,7 @@ export const projects: AtlasNode[] = [
       'The workflow drafts prior authorizations with a source citation on every sentence and navigates a mock payer phone tree.',
       'Also used: SQLAlchemy, CopilotKit, Fireworks, Daytona, and Braintrust.',
     ],
+    links: [{ label: 'Devpost submission', url: 'https://devpost.com/software/meridian-dyzt52' }],
     flow: ['Voice intake', 'Clinical rules', 'Nurse sign off', 'Cited prior auth draft'],
     related: ['penn', 'neuropath'],
   },
