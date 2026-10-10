@@ -19,6 +19,8 @@ const line = (a: Pt, b: Pt) => `M${a.x} ${a.y}L${b.x} ${b.y}`
 
 const treeEdges = nodes.filter((n) => n.parent).map((n) => [n.parent!, n.id] as const)
 const FLASH_GROUPS = 24
+/** Each flash group repeats on its own beat (seconds). */
+const beat = (g: number) => ({ dur: 3 + ((g * 7) % 5) * 0.9, lag: (g * 1.73) % 8 })
 const allIds = nodes.map((n) => n.id)
 
 /** The visitor's own camera move, applied on top of the one the route chose. */
@@ -60,6 +62,18 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
     }),
     [layout],
   )
+
+  // When a signal lands on a neuron it ripples: same beat as the edge that feeds it,
+  // offset by roughly how long the dash takes to cross (the dash covers ~510px per 40% of the beat).
+  const ripple = useMemo(() => {
+    const out: Record<string, { animationDuration: string; animationDelay: string }> = {}
+    treeEdges.forEach(([a, b], i) => {
+      const { dur, lag } = beat((layout.relayEdges.length + i) % FLASH_GROUPS)
+      const len = Math.hypot(layout.pos[a].x - layout.pos[b].x, layout.pos[a].y - layout.pos[b].y)
+      out[b] = { animationDuration: `${dur}s`, animationDelay: `${(dur * 0.4 * Math.min(1, (len + 9) / 510) - lag).toFixed(2)}s` }
+    })
+    return out
+  }, [layout])
 
   // A new destination starts from its own framing again.
   useEffect(() => setUser(HOME), [active, compact])
@@ -210,7 +224,7 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
               <path
                 key={g}
                 d={d}
-                style={{ animationDuration: `${3 + ((g * 7) % 5) * 0.9}s`, animationDelay: `-${((g * 1.73) % 8).toFixed(2)}s` }}
+                style={{ animationDuration: `${beat(g).dur}s`, animationDelay: `-${beat(g).lag.toFixed(2)}s` }}
               />
             ))}
           </g>
@@ -265,7 +279,7 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
             onFocus={(e) => e.currentTarget.matches(':focus-visible') && setHot(n.id)}
             onBlur={() => setHot(null)}
           >
-            <span className="core" aria-hidden="true" />
+            <span className={`core${ripple[n.id] ? ' fires' : ''}`} style={ripple[n.id]} aria-hidden="true" />
             <span className="label">
               <span className="name">{n.title}</span>
               {sub && <span className="sub">{sub}</span>}

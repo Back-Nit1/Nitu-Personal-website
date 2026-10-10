@@ -1023,3 +1023,31 @@ ul, ol {
     min-height: 36px;
   }
 }
+
+/* A signal landing on a neuron: one ring spreads outward and fades. */
+.core.fires::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: ripple 4s ease-out infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+
+@keyframes ripple {
+  0% { opacity: 0.9; transform: scale(0.7); }
+  9%, 100% { opacity: 0; transform: scale(2.2); }
+}
+
+/* The wordmark resolves out of a wide, blurred tracking when the page loads. */
+.node[data-kind='root'] .name {
+  animation: settle 1.8s var(--ease) 150ms backwards;
+}
+
+@keyframes settle {
+  from { opacity: 0; letter-spacing: 0.22em; filter: blur(8px); }
+}
