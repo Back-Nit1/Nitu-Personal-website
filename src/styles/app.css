@@ -933,7 +933,7 @@ ul, ol {
 .flow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 0;
+  gap: 8px 18px;
   counter-reset: step;
 }
 
@@ -955,14 +955,6 @@ ul, ol {
   border-radius: 50%;
   color: var(--accent);
   font-size: 11px;
-}
-
-.flow li:not(:last-child)::after {
-  content: '';
-  width: 18px;
-  height: 1px;
-  margin: 0 10px;
-  background: var(--line-strong);
 }
 
 /* ---------- Motion preferences ---------- */
