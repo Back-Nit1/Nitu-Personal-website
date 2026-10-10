@@ -10,9 +10,9 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Education',
     lead: 'Computer science meets cell biology and neuroscience.',
     body: [
-      'I study at Rutgers–New Brunswick, working toward a B.S. in Computer Science and a B.A. in Cell Biology and Neuroscience. I expect to graduate in May 2028.',
+      'I study at Rutgers New Brunswick, working toward a B.S. in Computer Science and a B.A. in Cell Biology and Neuroscience. I expect to graduate in May 2028.',
     ],
-    tags: ['Rutgers–New Brunswick', 'CS + neuroscience'],
+    tags: ['Rutgers New Brunswick', 'CS + neuroscience'],
     related: ['neuroscience', 'rl'],
     note: 'Degrees and graduation date as listed in the latest supplied materials.',
   },
@@ -51,10 +51,10 @@ export const entries: AtlasNode[] = [
     title: 'Neuropath',
     parent: 'experience',
     featured: true,
-    eyebrow: 'Professional / Full-stack engineering',
+    eyebrow: 'Professional / Full stack engineering',
     lead: 'Clinical software that keeps working when the connection doesn’t.',
     body: [
-      'I built a production React Native client for a clinical-device application, redesigned the MongoDB patient-record models and indexes, and implemented offline capture and synchronization.',
+      'I built a production React Native client for a clinical device application, redesigned the MongoDB patient record models and indexes, and implemented offline capture and synchronization.',
       'A clinician can record without a signal. The app queues the work locally and reconciles it when the connection returns.',
     ],
     tags: ['React Native', 'MongoDB', 'Offline synchronization'],
@@ -72,7 +72,7 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Product internship',
     lead: 'Helping creators turn ideas into games.',
     body: [
-      'I prototyped an AI game-design agent and product features for a no-code game-building platform. Weekly customer research fed directly into roadmap decisions.',
+      'I prototyped an AI game design agent and product features for a no code game building platform. Weekly customer research fed directly into roadmap decisions.',
     ],
     tags: ['AI prototyping', 'Customer discovery', 'Product'],
     outcome: 'A platform serving 3,000+ teachers and creators',
@@ -85,13 +85,13 @@ export const entries: AtlasNode[] = [
     title: 'Centren Health',
     parent: 'experience',
     eyebrow: 'Clinical AI / Structured extraction',
-    lead: 'Turning free-text reports into usable patient records.',
+    lead: 'Turning free text reports into usable patient records.',
     body: [
-      'I worked on structured extraction for an AI clinical-note workflow, converting provider reports into structured fields.',
+      'I worked on structured extraction for an AI clinical note workflow, converting provider reports into structured fields.',
     ],
     tags: ['Clinical AI', 'Structured data', 'Evaluation'],
-    outcome: '91% field-level extraction accuracy',
-    context: 'Measured on 25 hand-reviewed reports.',
+    outcome: '91% field level extraction accuracy',
+    context: 'Measured on 25 hand reviewed reports.',
     related: ['meridian', 'seqra'],
   },
   {
@@ -102,7 +102,7 @@ export const entries: AtlasNode[] = [
     eyebrow: 'PALURA & Seqra',
     lead: 'Getting a useful product into someone’s hands.',
     body: [
-      'At PALURA, I led engineering, discovery, and playtesting. At Seqra, I’m co-founder and lead ML engineer, working on peptide generation and evaluation.',
+      'At PALURA, I led engineering, discovery, and playtesting. At Seqra, I’m cofounder and lead ML engineer, working on peptide generation and evaluation.',
     ],
     tags: ['Product discovery', 'Engineering leadership', 'ML'],
     related: ['palura', 'seqra'],
@@ -161,10 +161,10 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Current research interests',
     lead: 'Machines that perceive, coordinate, and act.',
     body: [
-      'I’m interested in reinforcement learning, multi-agent systems, robotics, autonomous vehicles, and drones.',
+      'I’m interested in reinforcement learning, multiagent systems, robotics, autonomous vehicles, and drones.',
       'Nomos and Naigos give me concrete environments for exploring those questions.',
     ],
-    tags: ['Reinforcement learning', 'Robotics', 'Multi-agent systems'],
+    tags: ['Reinforcement learning', 'Robotics', 'Multiagent systems'],
     related: ['nomos', 'naigos'],
   },
   {
@@ -189,7 +189,7 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Research background',
     lead: 'A foundation in how biological systems work.',
     body: [
-      'My background spans molecular and imaging work, iPSC-derived interneuron research, and psychiatric neuroimaging.',
+      'My background spans molecular and imaging work, iPSC derived interneuron research, and psychiatric neuroimaging.',
       'At the bench that meant Western blotting, PCR, stereology, electron microscopy, and ImageJ analysis.',
     ],
     tags: ['Wet lab', 'Neuroimaging', 'Python analysis'],
@@ -203,7 +203,7 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Data & biological questions',
     lead: 'Using computation to find structure in complex data.',
     body: [
-      'This work includes fMRI analysis with nonnegative matrix factorization and Python analysis with CAHBIR, on research into self-injury, stigma, help-seeking, PTSD, and substance use.',
+      'This work includes fMRI analysis with nonnegative matrix factorization and Python analysis with CAHBIR, on research into self injury, stigma, help seeking, PTSD, and substance use.',
     ],
     tags: ['fMRI', 'Data analysis', 'Psychiatric research'],
     related: ['neuroscience', 'rl'],
@@ -246,7 +246,7 @@ export const entries: AtlasNode[] = [
     lead: 'Good games make learning their rules feel rewarding.',
     body: [
       'Celeste, Stardew Valley, Undertale, Mario, and Minecraft have all shaped my game ideas.',
-      'That interest connects directly to PALURA and speech-driven gameplay.',
+      'That interest connects directly to PALURA and speech driven gameplay.',
     ],
     tags: ['Celeste', 'Stardew Valley', 'Undertale'],
     related: ['palura', 'star'],
@@ -273,7 +273,7 @@ export const entries: AtlasNode[] = [
     eyebrow: 'A small naming habit',
     lead: 'Nomos. Kairos. Themis.',
     body: [
-      'I gravitate toward Greek-inspired names, with Latin, Roman, and Norse influences as well.',
+      'I gravitate toward Greek inspired names, with Latin, Roman, and Norse influences as well.',
       'Naming is a small creative thread running through the projects.',
     ],
     tags: ['Mythology', 'Language', 'Project names'],

@@ -15,7 +15,7 @@ export const structure: AtlasNode[] = [
     title: 'My story',
     parent: 'root',
     eyebrow: 'How I got here',
-    lead: 'I build software: full-stack products, applied ML, and agents.',
+    lead: 'I build software: full stack products, applied ML, and agents.',
     body: [
       'I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
     ],
@@ -28,7 +28,7 @@ export const structure: AtlasNode[] = [
     eyebrow: 'Where I’ve worked',
     lead: 'Software engineering, applied AI, and product work, with patient care and clinical shadowing alongside it.',
     body: [
-      'The engineering work comes first: a production mobile client, an AI game-design prototype, clinical-note extraction, and two companies I helped start. Patient care at Penn Medicine and clinical shadowing sit beside it as part of the picture.',
+      'The engineering work comes first: a production mobile client, an AI game design prototype, clinical note extraction, and two companies I helped start. Patient care at Penn Medicine and clinical shadowing sit beside it as part of the picture.',
     ],
   },
   {
@@ -72,7 +72,7 @@ export const structure: AtlasNode[] = [
     lead: 'I like working with people who are building around a problem they’ve actually felt.',
     body: [
       'I’m most useful where software meets healthcare, learning, or machine learning: early products, research tooling, simulation environments, and agents that have to prove what they did.',
-      'I’m based in the New Jersey and New York City area, studying at Rutgers–New Brunswick.',
+      'I’m based in the New Jersey and New York City area, studying at Rutgers New Brunswick.',
     ],
     related: ['founding', 'reliability', 'rl'],
   },
