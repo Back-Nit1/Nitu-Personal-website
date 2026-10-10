@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "check": "node scripts/check.ts",
+    "docs": "node scripts/docs.ts",
     "deploy:preview": "npm run check && vercel deploy",
     "deploy": "npm run check && vercel deploy --prod"
   },
