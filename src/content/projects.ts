@@ -391,7 +391,7 @@ export const projects: AtlasNode[] = [
     context: 'An unfinished experiment.',
     flow: ['Research agent', 'Cached JSON', 'Email agent'],
     related: ['leadership', 'kairos'],
-    note: 'Final framework, model choices, and completion are unclear.',
+    note: 'Final framework, model choices, and completion are unclear. No source found in Downloads.',
   },
   {
     id: 'autumn',
