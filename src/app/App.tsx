@@ -58,7 +58,7 @@ export function App() {
 
   useEffect(() => {
     const name = view === 'index' ? 'Index' : view === 'missing' ? 'Not found' : id === 'root' ? null : get(id).title
-    document.title = (name ? `${name} · ` : '') + 'Nitu Maramreddy — Software, ML & Connected Ideas'
+    document.title = (name ? `${name} · ` : '') + 'Nitu Maramreddy | Software, ML & Connected Ideas'
   }, [view, id])
 
   const announce =

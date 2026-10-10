@@ -101,7 +101,7 @@ function Reading({ node }: { node: AtlasNode }) {
             <p className="actions">
               {contactLinks.map((l) => <a key={l.url} href={l.url} rel="noreferrer">{l.label} ↗</a>)}
             </p>
-            <p className="scope">Main GitHub: {recovering.handle} — {recovering.note}</p>
+            <p className="scope">Main GitHub: {recovering.handle} | {recovering.note}</p>
           </>
         ) : (
           <p className="scope solo">Direct contact links are on their way. Until then, the work speaks first.</p>
@@ -133,7 +133,7 @@ function Outline({ id }: { id: string }) {
       {kids.map((n) => (
         <li key={n.id}>
           <a href={routeOf(n.id)}>{n.title}</a>
-          {!childrenOf(n.id).length && n.lead && <span> — {n.lead}</span>}
+          {!childrenOf(n.id).length && n.lead && <span>: {n.lead}</span>}
           <Outline id={n.id} />
         </li>
       ))}

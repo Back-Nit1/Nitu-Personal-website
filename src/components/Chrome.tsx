@@ -4,7 +4,7 @@ import type { Route } from '../app/hooks.ts'
 export function Header() {
   return (
     <header className="head">
-      <a className="identity" href="#/" aria-label="Nityanth Maramreddy — return to the whole network">
+      <a className="identity" href="#/" aria-label="Nityanth Maramreddy | return to the whole network">
         <span className="mono-mark" aria-hidden="true">nm<i>.</i></span>
         <h1>Nityanth Maramreddy</h1>
       </a>

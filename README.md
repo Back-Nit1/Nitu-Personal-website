@@ -14,7 +14,7 @@ npm run preview  # serve the production build
 npm run check    # content, route, and layout invariants
 ```
 
-`dist/` is plain static files with relative paths, so it deploys to any static host or subpath as-is.
+`dist/` is plain static files with relative paths, so it deploys to any static host or subpath as is.
 
 ## Before launch
 
@@ -35,7 +35,7 @@ src/
   app/         App shell, hash routing, appearance, measurement
   components/  header/footer, reading panel, schematics
   styles/      tokens (both appearances) and layout
-scripts/check.ts   invariants: counts, unique routes, required cross-connections
+scripts/check.ts   invariants: counts, unique routes, required cross connections
 ```
 
 - **Content** is typed records with stable IDs. `related` lists IDs; connections are symmetric and deduplicated in `content/index.ts`. `note` fields hold internal provenance and are never rendered.
