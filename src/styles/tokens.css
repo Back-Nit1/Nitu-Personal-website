@@ -8,10 +8,16 @@
   --muted: #9a9a9a;
   --line: rgb(255 255 255 / 0.16);
   --line-strong: rgb(255 255 255 / 0.4);
-  --edge: #5c5c5c;
+  --edge: #4a4a4a;
   --edge-on: #b4b4b4;
 
-  /* Branch identity comes from position and labels, not colour. */
+  /* Neurons stay white. Each branch carries one colour, always beside its label. */
+  --c-story: #f0b65a;
+  --c-experience: #b7a6ff;
+  --c-projects: #6fd0f2;
+  --c-research: #ff9a88;
+  --c-offduty: #9bd67f;
+  --c-connect: #71ddca;
   --accent: #fff;
   --teal: #fff;
 
@@ -23,6 +29,13 @@
   --quick: 180ms;
   --ease: cubic-bezier(0.45, 0.05, 0.2, 1);
 }
+
+[data-section='story'] { --accent: var(--c-story); }
+[data-section='experience'] { --accent: var(--c-experience); }
+[data-section='projects'] { --accent: var(--c-projects); }
+[data-section='research'] { --accent: var(--c-research); }
+[data-section='offduty'] { --accent: var(--c-offduty); }
+[data-section='connect'] { --accent: var(--c-connect); }
 
 @media (prefers-reduced-motion: reduce) {
   :root {

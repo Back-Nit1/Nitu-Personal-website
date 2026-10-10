@@ -18,10 +18,33 @@ interface Props {
 const line = (a: Pt, b: Pt) => `M${a.x} ${a.y}L${b.x} ${b.y}`
 
 const treeEdges = nodes.filter((n) => n.parent).map((n) => [n.parent!, n.id] as const)
-const FLASH_GROUPS = 24
-/** Each flash group repeats on its own beat (seconds). */
-const beat = (g: number) => ({ dur: 3 + ((g * 7) % 5) * 0.9, lag: (g * 1.73) % 8 })
+/** Each flash lane repeats on its own slow beat (seconds); the dash itself crosses in ~a quarter of it. */
+const beat = (g: number) => ({ dur: 20 + ((g * 7) % 5) * 2.5, lag: (g * 3.17) % 20 })
+const TRAVEL = 0.25
 const allIds = nodes.map((n) => n.id)
+
+/** Deal the connections that carry signals into lanes, one beat each. */
+function lanes(layout: ReturnType<typeof buildLayout>) {
+  const lane: { section?: string; edges: string[] }[] = []
+  const laneOf: Record<string, number> = {}
+  const index = new Map<string, number>()
+  const used = new Map<string, number>()
+  for (const [a, b] of treeEdges) {
+    const section = sectionOf(b) ?? ''
+    // Two lanes per branch, alternating, so a branch never fires all at once.
+    const n = used.get(section) ?? 0
+    used.set(section, n + 1)
+    const key = `${section}:${n % 2}`
+    if (!index.has(key)) index.set(key, lane.push({ section, edges: [] }) - 1)
+    const at = index.get(key)!
+    lane[at].edges.push(line(layout.pos[a], layout.pos[b]))
+    laneOf[b] = at
+  }
+  // Relay edges: every sixth one, in two quiet white lanes.
+  const first = lane.push({ edges: [] }, { edges: [] }) - 2
+  layout.relayEdges.forEach(([a, b], i) => i % 6 === 0 && lane[first + ((i / 6) % 2)].edges.push(line(a, b)))
+  return { flash: lane.map((l) => ({ d: l.edges.join(''), section: l.section })), laneOf }
+}
 
 /** The visitor's own camera move, applied on top of the one the route chose. */
 const HOME = { dx: 0, dy: 0, k: 1, all: false }
@@ -53,27 +76,24 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
       relay: layout.relayEdges.map(([a, b]) => line(a, b)).join(''),
       // Three depths of point: smaller and dimmer ones sit "behind".
       dots: [0, 1, 2].map((m) => layout.relays.filter((_, i) => i % 3 === m).map((p) => `M${p.x} ${p.y}h0`).join('')),
-      // Every connection carries signals. Edges are dealt into groups so each group fires on its own beat.
-      flash: Array.from({ length: FLASH_GROUPS }, (_, g) =>
-        [...layout.relayEdges.map(([a, b]) => line(a, b)), ...treeEdges.map(([a, b]) => line(layout.pos[a], layout.pos[b]))]
-          .filter((_, i) => i % FLASH_GROUPS === g)
-          .join(''),
-      ),
+      // Signals: each branch's own connections in two lanes, in the branch colour,
+      // plus a few quiet relay edges. Lanes fire on separate beats.
+      ...lanes(layout),
     }),
     [layout],
   )
 
-  // When a signal lands on a neuron it ripples: same beat as the edge that feeds it,
-  // offset by roughly how long the dash takes to cross (the dash covers ~510px per 40% of the beat).
+  // When a signal lands on a neuron it ripples: same beat as the lane that feeds it,
+  // offset by roughly how long the dash takes to cross (~510px over the travel share of the beat).
   const ripple = useMemo(() => {
     const out: Record<string, { animationDuration: string; animationDelay: string }> = {}
-    treeEdges.forEach(([a, b], i) => {
-      const { dur, lag } = beat((layout.relayEdges.length + i) % FLASH_GROUPS)
+    treeEdges.forEach(([a, b]) => {
+      const { dur, lag } = beat(geometry.laneOf[b])
       const len = Math.hypot(layout.pos[a].x - layout.pos[b].x, layout.pos[a].y - layout.pos[b].y)
-      out[b] = { animationDuration: `${dur}s`, animationDelay: `${(dur * 0.4 * Math.min(1, (len + 9) / 510) - lag).toFixed(2)}s` }
+      out[b] = { animationDuration: `${dur}s`, animationDelay: `${(dur * TRAVEL * Math.min(1, (len + 9) / 510) - lag).toFixed(2)}s` }
     })
     return out
-  }, [layout])
+  }, [layout, geometry])
 
   // A new destination starts from its own framing again.
   useEffect(() => setUser(HOME), [active, compact])
@@ -177,6 +197,7 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
     <nav
       ref={net}
       className={`net${dragging ? ' dragging' : ''}`}
+      data-open={active !== 'root' || undefined}
       aria-label="Neural network"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -220,10 +241,11 @@ export const Network = memo(function Network({ active, compact, portrait, w, h, 
             )
           })}
           <g className="flash">
-            {geometry.flash.map((d, g) => (
+            {geometry.flash.map(({ d, section }, g) => (
               <path
                 key={g}
                 d={d}
+                data-section={section}
                 style={{ animationDuration: `${beat(g).dur}s`, animationDelay: `-${beat(g).lag.toFixed(2)}s` }}
               />
             ))}

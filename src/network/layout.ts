@@ -126,19 +126,19 @@ function compute(compact: boolean, portrait: boolean): Layout {
   const taken = Object.values(pos)
   const relays: Pt[] = []
   const [rx, ry] = portrait ? [230, 420] : [620, 380]
-  for (let tries = 0; relays.length < 110 && tries < 6000; tries++) {
+  for (let tries = 0; relays.length < 56 && tries < 6000; tries++) {
     const a = rand() * Math.PI * 2
     // A lobed outline, not an ellipse: the field reads as one organ.
     const d = (0.1 + 0.95 * Math.sqrt(rand())) * (1 + 0.16 * Math.sin(3 * a + 1) + 0.1 * Math.sin(5 * a + 2))
     const p = { x: Math.round(Math.cos(a) * rx * d), y: Math.round(Math.sin(a) * ry * d) }
-    if ([...taken, ...relays].every((q) => Math.hypot(p.x - q.x, p.y - q.y) > 30)) relays.push(p)
+    if ([...taken, ...relays].every((q) => Math.hypot(p.x - q.x, p.y - q.y) > 46)) relays.push(p)
   }
   const anchors = [...taken, ...relays]
-  const relayEdges: [Pt, Pt][] = relays.flatMap((p, i) =>
+  const relayEdges: [Pt, Pt][] = relays.flatMap((p) =>
     anchors
       .filter((q) => q !== p)
       .sort((a, b) => Math.hypot(a.x - p.x, a.y - p.y) - Math.hypot(b.x - p.x, b.y - p.y))
-      .slice(0, 2 + (i % 2))
+      .slice(0, 2)
       .map((q) => [p, q] as [Pt, Pt]),
   )
 
