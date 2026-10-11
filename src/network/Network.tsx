@@ -27,8 +27,8 @@ interface Props {
 const line = (a: Pt, b: Pt) => `M${a.x} ${a.y}L${b.x} ${b.y}`
 
 const treeEdges = nodes.filter((n) => n.parent).map((n) => [n.parent!, n.id] as const)
-/** Each flash lane repeats on its own slow beat (seconds); the dash itself crosses in ~a quarter of it. */
-const beat = (g: number) => ({ dur: 20 + ((g * 7) % 5) * 2.5, lag: (g * 3.17) % 20 })
+/** Each flash lane repeats on its own beat (seconds); the dash itself crosses in ~a quarter of it. */
+const beat = (g: number) => ({ dur: 8 + ((g * 7) % 5) * 1.5, lag: (g * 3.17) % 8 })
 const TRAVEL = 0.25
 const allIds = nodes.map((n) => n.id)
 
@@ -59,9 +59,9 @@ function lanes(layout: ReturnType<typeof buildLayout>) {
     lane[at].edges.push(line(layout.pos[a], layout.pos[b]))
     laneOf[b] = at
   }
-  // Relay edges: every sixth one, in two quiet white lanes.
+  // Relay edges: every twelfth one, in two quiet white lanes.
   const first = lane.push({ edges: [] }, { edges: [] }) - 2
-  layout.relayEdges.forEach(([a, b], i) => i % 6 === 0 && lane[first + ((i / 6) % 2)].edges.push(line(a, b)))
+  layout.relayEdges.forEach(([a, b], i) => i % 12 === 0 && lane[first + ((i / 12) % 2)].edges.push(line(a, b)))
   return { flash: lane.map((l) => ({ d: l.edges.join(''), section: l.section })), laneOf }
 }
 
