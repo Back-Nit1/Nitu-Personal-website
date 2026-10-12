@@ -83,7 +83,6 @@ export const structure: AtlasNode[] = [
     parent: 'projects',
     eyebrow: 'Project group',
     lead: 'Simulated worlds where many agents learn to move without colliding, with each other or with the rules.',
-    related: ['rl'],
   },
   {
     id: 'agents',
@@ -92,7 +91,6 @@ export const structure: AtlasNode[] = [
     parent: 'projects',
     eyebrow: 'Project group',
     lead: 'Agents and automations built around one question: how do you know it did the right thing?',
-    related: ['reliability'],
   },
   {
     id: 'health',
@@ -101,7 +99,6 @@ export const structure: AtlasNode[] = [
     parent: 'projects',
     eyebrow: 'Project group',
     lead: 'Tools for researchers and for the paperwork that stands between a patient and care.',
-    related: ['neuroscience', 'penn'],
   },
   {
     id: 'products',
@@ -110,7 +107,6 @@ export const structure: AtlasNode[] = [
     parent: 'projects',
     eyebrow: 'Project group',
     lead: 'Things made for people to use, and ideally enjoy using.',
-    related: ['games'],
   },
   {
     id: 'workbench',

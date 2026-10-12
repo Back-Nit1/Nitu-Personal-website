@@ -42,7 +42,7 @@ for (const [hash, id] of [
 const required: [string, string][] = [
   ['nomos', 'naigos'], ['naigos', 'rl'], ['nomos', 'rl'],
   ['palura', 'origin'], ['origin', 'games'], ['palura', 'games'],
-  ['seqra', 'neuroscience'], ['neuroscience', 'health'],
+  ['seqra', 'neuroscience'],
   ['meridian', 'penn'], ['penn', 'neuropath'], ['meridian', 'neuropath'],
   ['cerno', 'praedos'], ['praedos', 'reliability'], ['cerno', 'reliability'],
   ['themis', 'sentinel'], ['sentinel', 'covenant'], ['themis', 'covenant'],
