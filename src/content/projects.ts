@@ -148,6 +148,7 @@ export const projects: AtlasNode[] = [
     ],
     links: [{ label: 'Devpost submission', url: 'https://devpost.com/software/meridian-dyzt52' }],
     flow: ['Voice intake', 'Clinical rules', 'Nurse sign off', 'Cited prior auth draft'],
+    visual: 'meridian',
     screens: [
       {
         src: 'meridian/intake.png',

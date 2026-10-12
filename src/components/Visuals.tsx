@@ -175,6 +175,30 @@ function Covenant() {
   )
 }
 
+function Meridian() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A voice referral passes through a stack of rules that sets urgency, then a nurse signs off before an appointment is booked">
+      <path className="v-bubble" d="M14 54h54a8 8 0 0 1 8 8v22a8 8 0 0 1-8 8H48l-8 10-2-10H14a8 8 0 0 1-8-8V62a8 8 0 0 1 8-8Z" />
+      {[0, 1, 2].map((i) => <rect key={i} className="v-soft" x={24 + i * 12} y={79 - [6, 12, 8][i]} width="6" height={[12, 24, 16][i]} rx="3" />)}
+      <path className="v-link" d="M76 75H104" />
+      {range(4).map((i) => (
+        <rect key={i} className={i === 1 ? 'v-fill' : 'v-node'} x="104" y={38 + i * 20} width="60" height="14" rx="4" />
+      ))}
+      <path className="v-link" d="M164 75H196" />
+      <circle className="v-ring" cx="214" cy="75" r="16" />
+      <path className="v-route" d="M207 75l5 6 9-11" />
+      <path className="v-link" d="M230 75H252" />
+      <rect className="v-node" x="252" y="61" width="54" height="28" rx="7" />
+      <g className="v-text">
+        <text x="42" y="128" textAnchor="middle">voice</text>
+        <text x="134" y="128" textAnchor="middle">rules</text>
+        <text x="214" y="128" textAnchor="middle">nurse</text>
+        <text x="279" y="79" textAnchor="middle">booked</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -183,6 +207,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   kairos: Kairos,
   gate: Gate,
   covenant: Covenant,
+  meridian: Meridian,
 }
 
 export function Scene({ id }: { id: VisualId }) {
