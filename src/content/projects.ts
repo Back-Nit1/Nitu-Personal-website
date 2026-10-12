@@ -480,6 +480,13 @@ export const projects: AtlasNode[] = [
     links: [{ label: 'Live app', url: 'https://macro-league.vercel.app/' }],
     flow: ['Onboarding', 'Meal logging', 'Challenges', 'Rewards'],
     visual: 'macroleague',
+    screens: [
+      {
+        src: 'macroleague/welcome.png',
+        alt: 'MacroLeague welcome screen with the headline Track your food, climb your league, a sample nutrition score card, and sign in buttons.',
+        caption: 'The welcome screen of the deployed web build. The score card is sample content in the app, not a real user.',
+      },
+    ],
     related: ['volleyball', 'palura'],
   },
   {
