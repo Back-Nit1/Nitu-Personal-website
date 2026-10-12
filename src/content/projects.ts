@@ -194,12 +194,30 @@ export const projects: AtlasNode[] = [
       'Also used: Scaffold ETH 2, OpenZeppelin, Hardhat, RainbowKit, Express, AWS EC2, Nginx, and PM2.',
     ],
     links: [
+      { label: 'Live app', url: 'https://covenant-pi.vercel.app/' },
       {
         label: 'Contract on BaseScan',
         url: 'https://basescan.org/address/0x9CA2E453462b87584f5A4D15f5962a4f2174BCE9',
       },
     ],
     flow: ['Fund escrow', 'Cover milestone', 'Post evidence', 'Release payout'],
+    screens: [
+      {
+        src: 'covenant/home.png',
+        alt: 'Covenant home page: "Crowdfunding with enforced accountability", with buttons to view or create campaigns.',
+        caption: 'The home page. Wallet address hidden.',
+      },
+      {
+        src: 'covenant/history.png',
+        alt: 'Covenant campaign history page listing retired contract versions and the campaigns that ran on each.',
+        caption: 'Campaign history: each retired contract version stays readable on chain. Creator addresses hidden.',
+      },
+      {
+        src: 'covenant/dashboard.png',
+        alt: 'Covenant creator dashboard showing a reputation score, campaign totals, and the creator’s campaigns.',
+        caption: 'The creator dashboard. Reputation only grows when reviewers approve milestone proof. Wallet address hidden.',
+      },
+    ],
     visual: 'covenant',
     related: ['themis', 'praedos'],
     note: 'Current contract releases on evidence posting (tracefund README). Older site copy and the résumé say donors approve at 50%; that was the retired deployment.',
