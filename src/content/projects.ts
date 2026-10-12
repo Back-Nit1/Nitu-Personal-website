@@ -504,7 +504,7 @@ export const projects: AtlasNode[] = [
     stack: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL'],
     outcome: 'Research → estimate → calibrate',
     context:
-      'Only the foundation exists: monorepo, API, database, typed contracts, and CI. No product screens or prediction models have been built yet.',
+      'The foundation and a slip intake screen exist, but there is no prediction engine, so an analysis comes back as insufficient data. Screenshots use test fixtures.',
     details: [
       'Quantitative work lives in typed deterministic code. Language models may only assist with parsing, evidence classification, and explanations.',
       'The first version is pregame analysis and paper trading only, with no trading credentials, no automatic execution, and no public access.',
@@ -513,6 +513,18 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Research', 'Estimate', 'Calibrate'],
     visual: 'auspex',
+    screens: [
+      {
+        src: 'auspex/new-analysis.png',
+        alt: 'Auspex new analysis screen with fields for stake and payout, a paste a slip box, and an intake check.',
+        caption: 'Slip intake: enter a position, then paste a slip or add legs one at a time. Test fixture session.',
+      },
+      {
+        src: 'auspex/ambiguous-leg.png',
+        alt: 'A leg flagged as needing resolution, with two matching events offered and none selected.',
+        caption: 'An ambiguous leg stays open until a person picks the event. Nothing is guessed. Test fixture data.',
+      },
+    ],
     related: ['volleyball', 'rl'],
   },
   {
