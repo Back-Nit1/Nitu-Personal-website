@@ -412,6 +412,7 @@ export const projects: AtlasNode[] = [
       'Redemption issues a server generated code built for a real cashier, with an alphabet that avoids look alike characters.',
       'Dining halls for seven New Jersey schools are built in, with Rutgers as the anchor campus.',
     ],
+    links: [{ label: 'Live app', url: 'https://macro-league.vercel.app/' }],
     flow: ['Onboarding', 'Meal logging', 'Challenges', 'Rewards'],
     visual: 'macroleague',
     related: ['volleyball', 'palura'],
