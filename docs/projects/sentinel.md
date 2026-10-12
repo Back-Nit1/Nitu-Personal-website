@@ -23,4 +23,8 @@ Then it acts, and reads every system back to confirm the write actually landed. 
 - A chaos harness injects dropped writes, server errors, and timeouts, and the case timeline shows them as injected failures.
 - After the loop, Sentinel reads Stripe, Salesforce, and Slack itself. A case is resolved only if every postcondition passes.
 
+## Links
+
+- [Live demo](https://sentinel-orpin-psi.vercel.app/)
+
 **Connected to.** Themis, Cerno / IntentLock, Covenant
