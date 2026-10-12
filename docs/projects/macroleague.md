@@ -23,4 +23,8 @@ The database, not the client, owns every number that matters. XP, points, streak
 - Redemption issues a server generated code built for a real cashier, with an alphabet that avoids look alike characters.
 - Dining halls for seven New Jersey schools are built in, with Rutgers as the anchor campus.
 
+## Links
+
+- [Live app](https://macro-league.vercel.app/)
+
 **Connected to.** Volleyball, PALURA, Autumn design builds

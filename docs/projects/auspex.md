@@ -10,7 +10,7 @@ It’s there to help someone think a bet through, not to promise certainty or pl
 
 **My part.** Research and prediction workflow design.
 
-**Outcome.** Research → estimate → calibrate. Only the foundation exists: monorepo, API, database, typed contracts, and CI. No product screens or prediction models have been built yet.
+**Outcome.** Research → estimate → calibrate. The foundation and a slip intake screen exist, but there is no prediction engine, so an analysis comes back as insufficient data. Screenshots use test fixtures.
 
 **Stack.** React, TypeScript, FastAPI, PostgreSQL
 
