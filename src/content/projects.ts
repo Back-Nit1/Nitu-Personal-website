@@ -89,6 +89,18 @@ export const projects: AtlasNode[] = [
       'Discovery included 110+ interviews.',
     ],
     visual: 'palura',
+    screens: [
+      {
+        src: 'palura/level-sketch.png',
+        alt: 'Hand drawn side view level layout with a golem, bats, a spawn trigger, and a note that chains unlock the cave entrance.',
+        caption: 'A hand drawn level sketch for a Caverunner stage. A design sketch, not gameplay.',
+      },
+      {
+        src: 'palura/pronunciation-wireframe.png',
+        alt: 'Grayscale phone wireframe of a speak the word screen showing the word cat, a microphone, a waveform, and star feedback.',
+        caption: 'Wireframe of the speak the word step from the design materials. A wireframe, not a screenshot of the build.',
+      },
+    ],
     related: ['origin', 'games'],
     note: 'Google Cloud Speech to Text, Whisper, and Wispr Flow appear in different materials; describe speech integration generally. Do not combine adoption counts with other historical snapshots.',
   },
