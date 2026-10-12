@@ -75,6 +75,18 @@ export const projects: AtlasNode[] = [
       'Transfer to real aircraft is a long term goal, not something this project has done.',
     ],
     visual: 'naigos',
+    screens: [
+      {
+        src: 'naigos/policy-comparison.png',
+        alt: 'Four map panels of the Owens Valley comparing an untrained policy, the trained policy, a direct route, and an avoid and wait heuristic, with survival and detection numbers.',
+        caption: 'Logged rollouts on the same seeds: untrained, trained, direct route, and an avoid and wait heuristic. One seed, one theatre.',
+      },
+      {
+        src: 'naigos/replay.png',
+        alt: 'Top down replay viewer of Owens Valley terrain with four aircraft trails, threat markers, and a sidebar of simulation metrics.',
+        caption: 'The replay viewer in top down mode, playing a recorded simulation. Terrain imagery tiles did not load here, so the map is tinted.',
+      },
+    ],
     related: ['nomos', 'rl'],
     note: 'Source: Naigos README and next-steps.md (plus sibling worktrees Naigos-cbf-sweep, curriculum, interceptor-3d, urban-routing, urban-theme). 1044 test functions counted. City theatres (Tehran, Dubai, Mecca) are visual only.',
   },
