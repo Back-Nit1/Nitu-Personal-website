@@ -529,6 +529,7 @@ export const projects: AtlasNode[] = [
       'Scenarios considered: ventilation and communication strategies, supply constraints, and access to testing, vaccines, and treatment.',
     ],
     flow: ['Model the campus', 'Simulate spread', 'Compare interventions'],
+    visual: 'campus',
     related: ['nomos', 'penn'],
   },
 ]

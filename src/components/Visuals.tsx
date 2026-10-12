@@ -372,6 +372,29 @@ function Autumn() {
   )
 }
 
+function Campus() {
+  const nodes: [number, number, boolean][] = [
+    [30, 50, true], [64, 34, true], [96, 62, false], [48, 92, true], [84, 104, false],
+    [124, 40, false], [130, 88, false], [158, 62, false], [20, 120, false], [112, 124, false],
+  ]
+  const edges = [[0, 1], [0, 3], [1, 2], [3, 4], [2, 4], [2, 5], [2, 6], [5, 7], [6, 7], [4, 9], [3, 8]]
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A campus contact network where some people are affected, beside two curves comparing a spread with no action against one with an intervention">
+      <g className="v-line">
+        {edges.map(([a, b]) => <path key={`${a}-${b}`} d={`M${nodes[a][0]} ${nodes[a][1]}L${nodes[b][0]} ${nodes[b][1]}`} />)}
+      </g>
+      {nodes.map(([x, y, hit], i) => <circle key={i} className={hit ? 'v-fill' : 'v-node'} cx={x} cy={y} r="6" />)}
+      <path className="v-line" d="M196 124H304M196 124V28" />
+      <path className="v-line dashed" d="M198 122C226 122 232 34 252 34S290 96 304 112" />
+      <path className="v-route" d="M198 122C226 120 240 76 260 76S292 104 304 114" />
+      <g className="v-text">
+        <text x="84" y="150" textAnchor="middle">contact network</text>
+        <text x="250" y="150" textAnchor="middle">spread over time</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -389,6 +412,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   shorted: Shorted,
   outreach: Outreach,
   autumn: Autumn,
+  campus: Campus,
 }
 
 export function Scene({ id }: { id: VisualId }) {
