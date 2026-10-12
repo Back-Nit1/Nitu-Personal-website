@@ -306,6 +306,27 @@ function Auspex() {
   )
 }
 
+function Shorted() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="Receipt items matched one to one against delivered items; the one with no match is highlighted as missing">
+      {range(4).map((i) => <rect key={i} className={i === 3 ? 'v-fill' : 'v-node'} x="20" y={22 + i * 28} width="90" height="18" rx="5" opacity={i === 3 ? 0.85 : 1} />)}
+      {range(3).map((i) => (
+        <g key={i}>
+          <rect className="v-node" x="210" y={22 + i * 28} width="90" height="18" rx="5" />
+          <path className="v-link" d={`M110 ${31 + i * 28}H210`} />
+        </g>
+      ))}
+      <path className="v-line dashed" d="M110 115H170" />
+      <circle className="v-ring" cx="176" cy="115" r="6" />
+      <g className="v-text">
+        <text x="65" y="148" textAnchor="middle">receipt</text>
+        <text x="255" y="148" textAnchor="middle">evidence</text>
+        <text x="195" y="136" textAnchor="middle">no match: missing</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -320,6 +341,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   sentinel: Sentinel,
   macroleague: MacroLeague,
   auspex: Auspex,
+  shorted: Shorted,
 }
 
 export function Scene({ id }: { id: VisualId }) {

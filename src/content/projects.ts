@@ -465,6 +465,7 @@ export const projects: AtlasNode[] = [
       'Gmail ingestion stores raw HTML before parsing and checks the real sender domain before reading a body.',
     ],
     flow: ['Receipt', 'Compare evidence', 'Value missing items', 'Draft explanation'],
+    visual: 'shorted',
     related: ['praedos', 'themis'],
     note: 'Source: doordash README and docs/GAPS.md. Intended model integration was Claude vision; live integration had not been tested.',
   },
