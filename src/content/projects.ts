@@ -598,7 +598,7 @@ export const projects: AtlasNode[] = [
         caption: 'Draft review: sources and an editable draft waiting for approval. Demo data, and Gmail is not connected.',
       },
     ],
-    related: ['leadership', 'kairos', 'names'],
+    related: ['leadership', 'kairos'],
     note: 'Source: local folder Downloads/email_workflow (README). The GitHub repo Back-Nit1/Hermes is private, so no link is shown. Renamed from "Outreach engine" at Nitu’s request, Oct 2026.',
   },
   {
