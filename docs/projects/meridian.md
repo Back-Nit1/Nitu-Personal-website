@@ -31,4 +31,4 @@ The rule at the center is that models extract and rules decide. A language model
 
 - [Devpost submission](https://devpost.com/software/meridian-dyzt52)
 
-**Connected to.** Neuropath, Centren Health, Penn Medicine, Seqra
+**Connected to.** Penn Medicine, Neuropath, Centren Health, Seqra

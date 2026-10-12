@@ -6,7 +6,7 @@
 
 Auspex turns a proposed position on a sports prediction market into an auditable analysis: normalized legs, timestamped evidence, probability estimates, market price comparison, and correlation aware combo math.
 
-It supports disciplined decision making, not certainty or automated wagering. A valid answer can be consider, pass, avoid, or insufficient data, and every estimate must state its uncertainty and how fresh its evidence is.
+It’s there to help someone think a bet through, not to promise certainty or place wagers automatically. A valid answer can be consider, pass, avoid, or insufficient data, and every estimate must state its uncertainty and how fresh its evidence is.
 
 **My part.** Research and prediction workflow design.
 

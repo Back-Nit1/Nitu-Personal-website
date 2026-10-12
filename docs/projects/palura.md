@@ -20,4 +20,4 @@ Caverunner is one of the shipped games: a platformer where your voice moves you 
 - The latest adoption snapshot: 20+ schools, five YMCAs, three Kumons, and 100 weekly active users.
 - Discovery included 110+ interviews.
 
-**Connected to.** The origin, Star · YC S22, Founder work, Games I love, MacroLeague
+**Connected to.** From care to code, Penn Medicine, The origin, Star · YC S22, Founder work, Games I love, MacroLeague

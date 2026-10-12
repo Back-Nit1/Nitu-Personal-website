@@ -2,7 +2,7 @@
 
 *Design engineering / Assessments* · Projects / The workbench
 
-> Practicing the craft of clear, useful interfaces.
+> Frontend assessments I used as design practice.
 
 Frontend assessments: a hotel homepage, and marketing and details dashboards built around year over year metrics.
 
