@@ -2,7 +2,7 @@ export type NodeKind = 'root' | 'section' | 'group' | 'project' | 'entry'
 
 export type SectionId = 'story' | 'experience' | 'projects' | 'research' | 'offduty' | 'connect'
 
-export type VisualId = 'nomos' | 'naigos' | 'palura' | 'seqra' | 'kairos' | 'gate' | 'covenant' | 'meridian' | 'praedos' | 'cerno' | 'sentinel'
+export type VisualId = 'nomos' | 'naigos' | 'palura' | 'seqra' | 'kairos' | 'gate' | 'covenant' | 'meridian' | 'praedos' | 'cerno' | 'sentinel' | 'macroleague'
 
 export interface Link {
   label: string

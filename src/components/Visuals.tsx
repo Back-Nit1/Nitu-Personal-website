@@ -262,6 +262,28 @@ function Sentinel() {
   )
 }
 
+function MacroLeague() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A phone logs meals to a database that computes points and feeds a leaderboard; a direct write from the phone to the leaderboard is blocked">
+      <rect className="v-node" x="14" y="44" width="44" height="82" rx="9" />
+      {range(3).map((i) => <circle key={i} className="v-fill" cx="36" cy={64 + i * 20} r="4" />)}
+      <path className="v-link" d="M58 85H122" />
+      <rect className="v-node" x="122" y="55" width="76" height="60" rx="8" />
+      <text className="v-tiny" x="160" y="82" textAnchor="middle">points</text>
+      <text className="v-tiny" x="160" y="96" textAnchor="middle">streaks</text>
+      <path className="v-link" d="M198 85H236" />
+      {[52, 40, 26].map((w, i) => <rect key={i} className={i === 0 ? 'v-fill' : 'v-soft'} x="236" y={56 + i * 20} width={w} height="12" rx="3" />)}
+      <path className="v-line dashed" d="M36 44C70 4 200 4 262 40" />
+      <path className="v-route" d="M144 8l16 16M160 8l-16 16" />
+      <g className="v-text">
+        <text x="36" y="146" textAnchor="middle">log meals</text>
+        <text x="160" y="146" textAnchor="middle">server computes</text>
+        <text x="262" y="146" textAnchor="middle">leaderboard</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -274,6 +296,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   praedos: Praedos,
   cerno: Cerno,
   sentinel: Sentinel,
+  macroleague: MacroLeague,
 }
 
 export function Scene({ id }: { id: VisualId }) {

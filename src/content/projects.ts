@@ -413,6 +413,7 @@ export const projects: AtlasNode[] = [
       'Dining halls for seven New Jersey schools are built in, with Rutgers as the anchor campus.',
     ],
     flow: ['Onboarding', 'Meal logging', 'Challenges', 'Rewards'],
+    visual: 'macroleague',
     related: ['volleyball', 'palura'],
   },
   {
