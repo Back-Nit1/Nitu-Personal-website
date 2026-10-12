@@ -973,6 +973,13 @@ ul, ol {
   color: var(--muted);
 }
 
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
 .scene {
   padding: 10px;
   border: 1px solid var(--line);

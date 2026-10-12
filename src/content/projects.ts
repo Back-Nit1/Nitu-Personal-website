@@ -34,7 +34,7 @@ export const projects: AtlasNode[] = [
       },
     ],
     related: ['naigos', 'rl'],
-    note: 'Source: Downloads/driving (SmoothRide/Clearway). Isaac execution layer with a frozen low level controller appears in the stack plan; do not claim it as built. Other compute integrations were discussed; do not claim equal implementation depth for each.',
+    note: 'Source: driving (SmoothRide/Clearway). Isaac execution layer with a frozen low level controller appears in the stack plan; do not claim it as built. Other compute integrations were discussed; do not claim equal implementation depth for each.',
   },
   {
     id: 'naigos',
@@ -64,7 +64,7 @@ export const projects: AtlasNode[] = [
     ],
     visual: 'naigos',
     related: ['nomos', 'rl'],
-    note: 'Source: /Users/nityanthmaramreddy/Naigos README and next-steps.md (plus sibling worktrees Naigos-cbf-sweep, curriculum, interceptor-3d, urban-routing, urban-theme). 1044 test functions counted. City theatres (Tehran, Dubai, Mecca) are visual only.',
+    note: 'Source: Naigos README and next-steps.md (plus sibling worktrees Naigos-cbf-sweep, curriculum, interceptor-3d, urban-routing, urban-theme). 1044 test functions counted. City theatres (Tehran, Dubai, Mecca) are visual only.',
   },
   {
     id: 'palura',
@@ -119,7 +119,7 @@ export const projects: AtlasNode[] = [
     visual: 'seqra',
     links: [{ label: 'Live demo', url: 'https://seqra.netlify.app' }],
     related: ['neuroscience', 'meridian'],
-    note: 'Sources: Downloads/Seqra spec, Downloads/SeqraRL. The RL environment is an exploration, not a shipped feature.',
+    note: 'Sources: Seqra spec, SeqraRL. The RL environment is an exploration, not a shipped feature.',
   },
   {
     id: 'meridian',
@@ -148,6 +148,28 @@ export const projects: AtlasNode[] = [
     ],
     links: [{ label: 'Devpost submission', url: 'https://devpost.com/software/meridian-dyzt52' }],
     flow: ['Voice intake', 'Clinical rules', 'Nurse sign off', 'Cited prior auth draft'],
+    screens: [
+      {
+        src: 'meridian/intake.png',
+        alt: 'Meridian patient intake line: editable caller answers to the red flag questions, next to an empty call panel.',
+        caption: 'Patient side: the intake line. Synthetic patient data.',
+      },
+      {
+        src: 'meridian/call.png',
+        alt: 'Meridian call transcript alternating between the agent’s questions and the patient’s answers, with the live voice option below.',
+        caption: 'The scripted call plays back one question at a time.',
+      },
+      {
+        src: 'meridian/slots.png',
+        alt: 'Appointment options listed with distance, timing, estimated cost, and prior authorization status.',
+        caption: 'Appointment options with distance, timing, and estimated cost.',
+      },
+      {
+        src: 'meridian/worklist.png',
+        alt: 'Meridian nurse worklist table showing urgency, disposition, insurance, and review status for each referral.',
+        caption: 'Doctor side: the nurse worklist. Approving confirms the booking. Synthetic patient data.',
+      },
+    ],
     related: ['penn', 'neuropath'],
   },
   {
@@ -234,8 +256,20 @@ export const projects: AtlasNode[] = [
       'Legal and sensitive answers, such as work authorization, are never inferred from a résumé, and the extension never submits an application on its own.',
     ],
     flow: ['Scan', 'Map', 'Resolve', 'Policy', 'Fill'],
+    screens: [
+      {
+        src: 'praedos/resume.png',
+        alt: 'Praedos resume page with an upload button and a list of saved PDF resumes, one marked as default.',
+        caption: 'Resume vault. PDFs stay in the browser and you review every value read from one.',
+      },
+      {
+        src: 'praedos/playground.png',
+        alt: 'Praedos mapping playground: a form control described on the left, and the predicted field, confidence, decision, and reasons on the right.',
+        caption: 'Mapping playground. An unknown field gets a confidence of 0 and a decision to skip.',
+      },
+    ],
     related: ['cerno', 'outreach'],
-    note: 'Source: /Users/nityanthmaramreddy/applicanttool (IMPLEMENTATION_STATUS.md, 2026-09-01: 763 tests passing) and the build spec prompt.md.',
+    note: 'Source: applicanttool (IMPLEMENTATION_STATUS.md, 2026-09-01: 763 tests passing) and the build spec prompt.md.',
   },
   {
     id: 'cerno',
@@ -262,7 +296,7 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Intent', 'Agent actions', 'Git changes', 'Runtime evidence'],
     related: ['praedos', 'themis'],
-    note: 'Source: Downloads/Cerno README. Separate implemented capabilities from planned components.',
+    note: 'Source: Cerno README. Separate implemented capabilities from planned components.',
   },
   {
     id: 'themis',
@@ -315,7 +349,7 @@ export const projects: AtlasNode[] = [
     flow: ['Investigate', 'Decide', 'Act', 'Readback verify'],
     visual: 'gate',
     related: ['themis', 'cerno', 'covenant'],
-    note: 'Source: Downloads/Sentinel /sentinel README. README mentions eight scenarios but reports 7/7; stating the reported result.',
+    note: 'Source: Sentinel /sentinel README. README mentions eight scenarios but reports 7/7; stating the reported result.',
   },
   {
     id: 'macroleague',
@@ -351,7 +385,7 @@ export const projects: AtlasNode[] = [
     lead: 'Understanding the probabilities behind sports markets.',
     body: [
       'Auspex turns a proposed position on a sports prediction market into an auditable analysis: normalized legs, timestamped evidence, probability estimates, market price comparison, and correlation aware combo math.',
-      'It supports disciplined decision making, not certainty or automated wagering. A valid answer can be consider, pass, avoid, or insufficient data, and every estimate must state its uncertainty and how fresh its evidence is.',
+      'It’s there to help someone think a bet through, not to promise certainty or place wagers automatically. A valid answer can be consider, pass, avoid, or insufficient data, and every estimate must state its uncertainty and how fresh its evidence is.',
     ],
     contribution: 'Research and prediction workflow design.',
     stack: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL'],
@@ -391,7 +425,7 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Receipt', 'Compare evidence', 'Value missing items', 'Draft explanation'],
     related: ['praedos', 'themis'],
-    note: 'Source: Downloads/doordash README and docs/GAPS.md. Intended model integration was Claude vision; live integration had not been tested.',
+    note: 'Source: doordash README and docs/GAPS.md. Intended model integration was Claude vision; live integration had not been tested.',
   },
   {
     id: 'outreach',
@@ -417,7 +451,7 @@ export const projects: AtlasNode[] = [
     title: 'Autumn design builds',
     parent: 'workbench',
     eyebrow: 'Design engineering / Assessments',
-    lead: 'Practicing the craft of clear, useful interfaces.',
+    lead: 'Frontend assessments I used as design practice.',
     body: [
       'Frontend assessments: a hotel homepage, and marketing and details dashboards built around year over year metrics.',
     ],

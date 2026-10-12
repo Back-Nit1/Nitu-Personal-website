@@ -60,6 +60,13 @@ function Reading({ node }: { node: AtlasNode }) {
 
       {node.body?.map((p) => <p key={p}>{p}</p>)}
 
+      {node.screens?.map((s) => (
+        <figure className="figure shot" key={s.src}>
+          <img src={`${import.meta.env.BASE_URL}${s.src}`} alt={s.alt} loading="lazy" decoding="async" />
+          <figcaption>{s.caption}</figcaption>
+        </figure>
+      ))}
+
       {(node.contribution || node.outcome || node.recognition) && (
         <dl className="facts">
           {node.contribution && <Fact term="My part">{node.contribution}</Fact>}
@@ -104,7 +111,7 @@ function Reading({ node }: { node: AtlasNode }) {
             <p className="scope">Main GitHub: {recovering.handle} | {recovering.note}</p>
           </>
         ) : (
-          <p className="scope solo">Direct contact links are on their way. Until then, the work speaks first.</p>
+          <p className="scope solo">Contact links aren’t up yet.</p>
         ))}
 
       {kids.length > 0 && (

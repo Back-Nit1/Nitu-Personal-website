@@ -43,6 +43,8 @@ export interface AtlasNode {
   flow?: string[]
   /** A bespoke schematic scene. */
   visual?: VisualId
+  /** Real screenshots, paths relative to `public/`. Say what data they show in the caption. */
+  screens?: { src: string; alt: string; caption: string }[]
   /** Only real, working URLs. */
   links?: Link[]
 
