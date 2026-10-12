@@ -25,6 +25,7 @@ An event indexer keeps the application in step with what happened on the blockch
 
 ## Links
 
+- [Live app](https://covenant-pi.vercel.app/)
 - [Contract on BaseScan](https://basescan.org/address/0x9CA2E453462b87584f5A4D15f5962a4f2174BCE9)
 
 **Connected to.** Themis, Praedos, Sentinel
