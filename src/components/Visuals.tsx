@@ -239,6 +239,29 @@ function Cerno() {
   )
 }
 
+function Sentinel() {
+  const rows = ['stripe', 'salesforce', 'slack']
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="An agent writes to three systems and reads each one back; one write that did not land is retried before the case counts as resolved">
+      <circle className="v-ring" cx="40" cy="80" r="18" />
+      <text className="v-text" x="40" y="118" textAnchor="middle">agent</text>
+      {rows.map((r, i) => {
+        const y = 36 + i * 44
+        return (
+          <g key={r}>
+            <path className="v-link" d={`M58 80C110 80 130 ${y - 5} 190 ${y - 5}`} />
+            <rect className="v-node" x="190" y={y - 14} width="84" height="28" rx="6" />
+            <text className="v-tiny" x="232" y={y + 2.6} textAnchor="middle">{r}</text>
+            {i === 1 ? <circle className="v-ring" cx="296" cy={y} r="8" /> : <path className="v-route" d={`M288 ${y}l5 6 10-12`} />}
+            <path className="v-line dashed" d={`M274 ${y + 5}H${i === 1 ? 288 : 284}`} />
+          </g>
+        )
+      })}
+      <text className="v-text" x="232" y="150" textAnchor="middle">read back, retry if missing</text>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -250,6 +273,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   meridian: Meridian,
   praedos: Praedos,
   cerno: Cerno,
+  sentinel: Sentinel,
 }
 
 export function Scene({ id }: { id: VisualId }) {

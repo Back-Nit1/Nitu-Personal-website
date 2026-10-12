@@ -386,7 +386,7 @@ export const projects: AtlasNode[] = [
         caption: 'Evaluation on the sandbox: 7 of 7 scenarios passed, 1 skipped.',
       },
     ],
-    visual: 'gate',
+    visual: 'sentinel',
     related: ['themis', 'cerno', 'covenant'],
     note: 'Source: Sentinel /sentinel README. README mentions eight scenarios but reports 7/7; stating the reported result.',
   },
