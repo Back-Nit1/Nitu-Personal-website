@@ -153,6 +153,13 @@ export const projects: AtlasNode[] = [
       'The same scorer was wrapped as a reinforcement learning environment to probe how an optimizer could game a naive reward, which is why the scoring rules are kept deterministic and explicit.',
     ],
     visual: 'seqra',
+    screens: [
+      {
+        src: 'seqra/candidates.png',
+        alt: 'Seqra interface after a query, with five ranked candidate peptides, property bars, a scoring radar, a residue editor, and a FASTA export panel.',
+        caption: 'The web frontend after a query, scoring a generated candidate with the project’s own scoring code. Candidates are heuristic picks, not validated treatments.',
+      },
+    ],
     links: [{ label: 'Live demo', url: 'https://seqra.netlify.app' }],
     related: ['neuroscience', 'meridian'],
     note: 'Sources: Seqra spec, SeqraRL. The RL environment is an exploration, not a shipped feature.',
