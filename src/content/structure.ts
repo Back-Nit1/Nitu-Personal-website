@@ -6,7 +6,7 @@ export const structure: AtlasNode[] = [
     slug: '',
     kind: 'root',
     title: 'nitu',
-    eyebrow: 'Builder · Explorer · Human',
+    eyebrow: 'CS and neuroscience at Rutgers',
   },
 
   {
@@ -17,7 +17,7 @@ export const structure: AtlasNode[] = [
     eyebrow: 'How I got here',
     lead: 'I build software: full stack products, applied ML, and agents.',
     body: [
-      'I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
+      'I started out premed and moved into engineering after building my first startup. I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
     ],
   },
   {
@@ -26,9 +26,9 @@ export const structure: AtlasNode[] = [
     title: 'Experience',
     parent: 'root',
     eyebrow: 'Where I’ve worked',
-    lead: 'Software engineering, applied AI, and product work, with patient care and clinical shadowing alongside it.',
+    lead: 'Software engineering, applied AI, and product work, with clinical shadowing alongside it.',
     body: [
-      'The engineering work comes first: a production mobile client, an AI game design prototype, clinical note extraction, and two companies I helped start. Patient care at Penn Medicine and clinical shadowing sit beside it as part of the picture.',
+      'Most of it is engineering: a production mobile client, an AI game design prototype, clinical note extraction, and two companies I helped start. I also shadowed a urologist at RWJ.',
     ],
   },
   {
@@ -37,9 +37,9 @@ export const structure: AtlasNode[] = [
     title: 'Projects',
     parent: 'root',
     eyebrow: 'What I’ve built',
-    lead: 'Seventeen builds, from shipped products to honest experiments.',
+    lead: 'Seventeen builds. Some shipped, some are still experiments.',
     body: [
-      'They’re grouped by the question each one chases. Every entry says plainly what it is: a simulation, a prototype, a shipped product, or an idea still on the bench.',
+      'They’re grouped by the question each one is chasing. Each entry says what it actually is: a simulation, a prototype, a shipped product, or an idea still on the bench.',
     ],
   },
   {
