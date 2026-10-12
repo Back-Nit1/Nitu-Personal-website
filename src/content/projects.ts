@@ -342,6 +342,28 @@ export const projects: AtlasNode[] = [
       'The wider design uses React, TypeScript, Zod, Bedrock AgentCore, S3, CDK, Lambda, and CloudWatch.',
     ],
     flow: ['Identify', 'Collect evidence', 'Classify', 'Policy decision'],
+    screens: [
+      {
+        src: 'themis/cases.png',
+        alt: 'Themis investigator console listing synthetic dispute cases with status, merchant, classification, and amount.',
+        caption: 'The case ledger. Fictional merchants and synthetic cases.',
+      },
+      {
+        src: 'themis/case.png',
+        alt: 'Themis case detail with a five step progress strip, the complaint, affected transactions, and the merchant identity.',
+        caption: 'One case: the complaint, affected transactions, and what is known about the merchant.',
+      },
+      {
+        src: 'themis/merchants.png',
+        alt: 'Themis merchants table with known descriptors, case counts, recent trend, and risk signals.',
+        caption: 'Merchant memory: descriptors, case counts, and risk signals. Fictional merchants.',
+      },
+      {
+        src: 'themis/review.png',
+        alt: 'Themis human review queue showing an escalated case, the reason, the agent’s proposal and confidence, and disabled decision controls.',
+        caption: 'The human review queue. Decisions are switched off in this read only deployment.',
+      },
+    ],
     visual: 'gate',
     related: ['sentinel', 'covenant'],
   },
