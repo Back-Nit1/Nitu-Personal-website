@@ -27,6 +27,18 @@ export const projects: AtlasNode[] = [
       'Visualization and compute also drew on deck.gl, CesiumJS, Modal, and Fireworks.',
     ],
     visual: 'nomos',
+    screens: [
+      {
+        src: 'nomos/fleet-2d.png',
+        alt: 'Top down plot of a simulated fleet of cars as blue dots on the San Francisco road network, with a step counter and crash count.',
+        caption: 'A plot of the simulated fleet on San Francisco’s road network, from an earlier working build. Simulation output.',
+      },
+      {
+        src: 'nomos/fleet-3d.png',
+        alt: 'A 3D globe view of simulated cars driving over San Francisco street imagery, with a timeline.',
+        caption: 'The same kind of run in a 3D view over real street imagery. The imagery is real, the vehicles are simulated.',
+      },
+    ],
     links: [
       {
         label: 'Hackathon project page',
