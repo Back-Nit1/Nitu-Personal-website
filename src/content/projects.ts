@@ -292,6 +292,13 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Discover programs', 'Rule based eligibility', 'Draft', 'Eight check claim gate'],
     visual: 'kairos',
+    screens: [
+      {
+        src: 'kairos/run.png',
+        alt: 'Kairos run page: five opportunities scanned, three discarded, each tied to the deterministic check that rejected it.',
+        caption: 'One run on the demo catalog. Each rejection names the rule that fired. A rule based dry run with no model call, on demo data.',
+      },
+    ],
     related: ['cerno', 'leadership'],
   },
   {
