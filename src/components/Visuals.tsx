@@ -327,6 +327,31 @@ function Shorted() {
   )
 }
 
+function Outreach() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="Many targets feed a research agent that writes cached JSON, which a separate email agent turns into drafts">
+      {range(12).map((i) => <circle key={i} className="v-node" cx={20 + (i % 3) * 16} cy={44 + Math.floor(i / 3) * 18} r="4.5" />)}
+      <path className="v-link" d="M62 80H80" />
+      <rect className="v-node" x="80" y="58" width="54" height="44" rx="7" />
+      <text className="v-tiny" x="107" y="83" textAnchor="middle">research</text>
+      <path className="v-link" d="M134 80H146" />
+      <rect className="v-soft" x="146" y="62" width="36" height="36" rx="6" />
+      <text className="v-tiny" x="164" y="83" textAnchor="middle">json</text>
+      <path className="v-link" d="M182 80H196" />
+      <rect className="v-node" x="196" y="58" width="48" height="44" rx="7" />
+      <text className="v-tiny" x="220" y="83" textAnchor="middle">email</text>
+      <path className="v-link" d="M244 80H258" />
+      {range(3).map((i) => <rect key={i} className={i === 0 ? 'v-fill' : 'v-soft'} x="258" y={60 + i * 14} width="42" height="9" rx="3" />)}
+      <path className="v-line dashed" d="M190 36V124" />
+      <g className="v-text">
+        <text x="36" y="136" textAnchor="middle">targets</text>
+        <text x="164" y="136" textAnchor="middle">cache</text>
+        <text x="279" y="136" textAnchor="middle">drafts</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -342,6 +367,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   macroleague: MacroLeague,
   auspex: Auspex,
   shorted: Shorted,
+  outreach: Outreach,
 }
 
 export function Scene({ id }: { id: VisualId }) {

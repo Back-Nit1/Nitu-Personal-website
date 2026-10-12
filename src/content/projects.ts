@@ -484,6 +484,7 @@ export const projects: AtlasNode[] = [
     outcome: 'Research and drafting as separate stages',
     context: 'An unfinished experiment.',
     flow: ['Research agent', 'Cached JSON', 'Email agent'],
+    visual: 'outreach',
     related: ['leadership', 'kairos'],
     note: 'Final framework, model choices, and completion are unclear. No source found in Downloads.',
   },
