@@ -56,7 +56,8 @@ function Reading({ node }: { node: AtlasNode }) {
     <>
       {node.lead && <p className="lead">{node.lead}</p>}
 
-      {node.visual ? <Scene id={node.visual} /> : node.flow && <Flow steps={node.flow} />}
+      {node.visual && <Scene id={node.visual} />}
+      {node.flow && <Flow steps={node.flow} />}
 
       {node.body?.map((p) => <p key={p}>{p}</p>)}
 
