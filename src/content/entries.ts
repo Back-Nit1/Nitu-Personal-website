@@ -106,13 +106,20 @@ export const entries: AtlasNode[] = [
     eyebrow: 'Product intern / San Francisco / February to May 2026',
     lead: 'Helping creators turn ideas into games.',
     body: [
-      'I prototyped an AI game design agent and product features for a no code game building platform.',
-      'I ran weekly user interviews and worked with the founder to turn what I heard into roadmap decisions.',
+      'Star is a browser based tool that turns a text description into a playable game. You describe an idea, play the first version, and ask for changes. It hosts multiplayer rooms and leaderboards, and finished games can be shared as links or exported.',
+      'I prototyped an AI game design agent and product features for the platform. I ran weekly user interviews and worked with the founder to turn what I heard into roadmap decisions.',
     ],
     tags: ['AI prototyping', 'Customer discovery', 'Product'],
     outcome: 'A platform serving 3,000+ teachers and creators',
     context: 'That is the platform’s reach, not users I brought in.',
+    details: [
+      'Star is backed by Y Combinator, from the Summer 2022 batch.',
+      'Games run in the browser, including 3D games, and creators can tune values like gravity, speed, and spawn rates with sliders while a game is running.',
+      'The company describes its audience as people with no coding background, educators, and indie developers.',
+    ],
+    links: [{ label: 'buildwithstar.com', url: 'https://buildwithstar.com' }],
     related: ['palura', 'games'],
+    note: 'Company description from buildwithstar.com and the YC company page (checked Oct 2026). The site’s own game counts are not used here; reach figure is the one Nitu supplied.',
   },
   {
     id: 'centren',
