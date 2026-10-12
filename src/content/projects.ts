@@ -348,6 +348,23 @@ export const projects: AtlasNode[] = [
     ],
     links: [{ label: 'Live demo', url: 'https://sentinel-orpin-psi.vercel.app/' }],
     flow: ['Investigate', 'Decide', 'Act', 'Readback verify'],
+    screens: [
+      {
+        src: 'sentinel/queue.png',
+        alt: 'Sentinel dispute queue listing chargebacks with customer, amount, reason, deadline, and whether each was handled and verified.',
+        caption: 'The dispute queue. Synthetic customers in Stripe test mode.',
+      },
+      {
+        src: 'sentinel/case.png',
+        alt: 'Sentinel case view with evidence from Salesforce and Gmail, the agent’s steps, and the end state verified in each system.',
+        caption: 'One case: the evidence found, what the agent did, and the end state read back from each system.',
+      },
+      {
+        src: 'sentinel/evaluation.png',
+        alt: 'Sentinel evaluation page showing seven of seven scenarios passed on the sandbox, with per scenario results.',
+        caption: 'Evaluation on the sandbox: 7 of 7 scenarios passed, 1 skipped.',
+      },
+    ],
     visual: 'gate',
     related: ['themis', 'cerno', 'covenant'],
     note: 'Source: Sentinel /sentinel README. README mentions eight scenarios but reports 7/7; stating the reported result.',
