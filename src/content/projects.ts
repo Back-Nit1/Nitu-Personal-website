@@ -587,6 +587,18 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Discover', 'Research', 'Draft', 'Human approval', 'Gmail draft'],
     visual: 'outreach',
+    screens: [
+      {
+        src: 'hermes/candidates.png',
+        alt: 'Hermes campaign page listing three fictional demo professors with scores, before any research has run.',
+        caption: 'A research campaign in demo mode: ranked, scored candidates before research starts. Fictional people.',
+      },
+      {
+        src: 'hermes/draft-review.png',
+        alt: 'Hermes draft review: a researched candidate list on the left, and cited evidence beside an editable draft marked needs review on the right.',
+        caption: 'Draft review: sources and an editable draft waiting for approval. Demo data, and Gmail is not connected.',
+      },
+    ],
     related: ['leadership', 'kairos', 'names'],
     note: 'Source: local folder Downloads/email_workflow (README). The GitHub repo Back-Nit1/Hermes is private, so no link is shown. Renamed from "Outreach engine" at Nitu’s request, Oct 2026.',
   },
