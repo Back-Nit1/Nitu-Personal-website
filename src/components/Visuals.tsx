@@ -352,6 +352,26 @@ function Outreach() {
   )
 }
 
+function Autumn() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A wireframe of a single page homepage beside a wireframe of a dashboard with stat cards and a trend line">
+      <rect className="v-node" x="14" y="12" width="140" height="124" rx="6" />
+      <rect className="v-soft" x="22" y="20" width="124" height="10" rx="3" />
+      <rect className="v-soft" x="22" y="38" width="124" height="34" rx="4" />
+      <rect className="v-fill" x="22" y="56" width="34" height="9" rx="4" />
+      {range(3).map((i) => <rect key={i} className="v-soft" x="22" y={80 + i * 16} width={[96, 110, 80][i]} height="8" rx="3" />)}
+      <rect className="v-node" x="172" y="12" width="134" height="124" rx="6" />
+      {range(3).map((i) => <rect key={i} className="v-soft" x={180 + i * 41} y="22" width="36" height="26" rx="4" />)}
+      <path className="v-route" d="M182 120C200 110 210 92 228 98S256 70 272 76 292 58 298 56" />
+      <path className="v-line" d="M182 124H298" />
+      <g className="v-text">
+        <text x="84" y="152" textAnchor="middle">homepage</text>
+        <text x="239" y="152" textAnchor="middle">dashboard</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -368,6 +388,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   auspex: Auspex,
   shorted: Shorted,
   outreach: Outreach,
+  autumn: Autumn,
 }
 
 export function Scene({ id }: { id: VisualId }) {

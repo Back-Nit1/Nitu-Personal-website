@@ -507,6 +507,7 @@ export const projects: AtlasNode[] = [
       'It is a single responsive page of nine sections with social proof and a low pressure call to action.',
     ],
     flow: ['Homepage', 'Dashboards', 'Details'],
+    visual: 'autumn',
     related: ['star', 'macroleague'],
     note: 'Project specific stack is not established; do not invent a framework.',
   },
