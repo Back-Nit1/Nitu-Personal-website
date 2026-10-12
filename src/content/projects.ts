@@ -622,6 +622,18 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Homepage', 'Dashboards', 'Details'],
     visual: 'autumn',
+    screens: [
+      {
+        src: 'autumn/homepage.png',
+        alt: 'A hotel marketing homepage with the headline More guests find you, more of them book direct, beside a photo of a lodge at dusk.',
+        caption: 'The homepage build, written for one reader: the owner of an independent hotel. Assessment work.',
+      },
+      {
+        src: 'autumn/dashboard.png',
+        alt: 'A marketing dashboard with a direct booking revenue headline, a funnel from ad impressions to bookings, and a chart compared with last year.',
+        caption: 'The dashboard redesign: one headline number and the year over year comparison as a sentence. Sample data from the assessment.',
+      },
+    ],
     related: ['star', 'macroleague'],
     note: 'Project specific stack is not established; do not invent a framework.',
   },
