@@ -24,4 +24,4 @@ The design goal is incorrect fills approaching zero, not fields filled approachi
 - Corrections are stored against semantic fingerprints, so fixing one question carries across application systems, scoped globally, per applicant tracking system, per company, or per exact field.
 - Legal and sensitive answers, such as work authorization, are never inferred from a résumé, and the extension never submits an application on its own.
 
-**Connected to.** Trustworthy agents, Covenant, Cerno / IntentLock, Outreach engine, Shorted
+**Connected to.** Trustworthy agents, Covenant, Cerno / IntentLock, Hermes, Shorted

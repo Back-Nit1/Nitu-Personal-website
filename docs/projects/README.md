@@ -14,6 +14,6 @@
 - [MacroLeague](macroleague.md): Nutrition tracking with a little friendly competition.
 - [Auspex](auspex.md): Understanding the probabilities behind sports markets.
 - [Shorted](shorted.md): Making missing item refund requests easier to explain.
-- [Outreach engine](outreach.md): Researching the people worth reaching out to.
+- [Hermes](outreach.md): Research the people worth writing to, with a human approving every message.
 - [Autumn design builds](autumn.md): Frontend assessments I used as design practice.
 - [Campus preparedness](campus.md): What happens when a campus has to respond to an outbreak?

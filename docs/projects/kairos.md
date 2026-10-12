@@ -25,4 +25,4 @@ Its governing rule is that models perceive and Python decides. Eligibility is pl
 - Storage and migrations use SQLite and Alembic.
 - Broader investor and accelerator support are possible extensions, not built features.
 
-**Connected to.** Campus leadership, Why the Greek names?, Cerno / IntentLock, Outreach engine
+**Connected to.** Campus leadership, Why the Greek names?, Cerno / IntentLock, Hermes
