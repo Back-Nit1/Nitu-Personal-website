@@ -532,7 +532,6 @@ export const projects: AtlasNode[] = [
         caption: 'An ambiguous leg stays open until a person picks the event. Nothing is guessed. Test fixture data.',
       },
     ],
-    related: ['volleyball', 'rl'],
   },
   {
     id: 'shorted',
@@ -634,7 +633,7 @@ export const projects: AtlasNode[] = [
         caption: 'The dashboard redesign: one headline number and the year over year comparison as a sentence. Sample data from the assessment.',
       },
     ],
-    related: ['star', 'macroleague'],
+    related: ['macroleague'],
     note: 'Project specific stack is not established; do not invent a framework.',
   },
   {
@@ -656,6 +655,6 @@ export const projects: AtlasNode[] = [
     ],
     flow: ['Model the campus', 'Simulate spread', 'Compare interventions'],
     visual: 'campus',
-    related: ['nomos', 'penn'],
+    related: ['nomos'],
   },
 ]
