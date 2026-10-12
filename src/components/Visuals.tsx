@@ -199,6 +199,24 @@ function Meridian() {
   )
 }
 
+function Praedos() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A verified profile fills three form fields it is sure about and leaves the fourth blank">
+      <rect className="v-node" x="14" y="26" width="70" height="92" rx="7" />
+      {range(3).map((i) => <rect key={i} className="v-soft" x="24" y={42 + i * 20} width="50" height="8" rx="3" />)}
+      {range(4).map((i) => (
+        <g key={i}>
+          <rect className={i === 3 ? 'v-line dashed' : 'v-node'} x="150" y={26 + i * 30} width="156" height="20" rx="5" />
+          {i < 3 && <circle className="v-fill" cx="162" cy={36 + i * 30} r="3.5" />}
+          {i < 3 && <path className="v-link" d={`M84 ${46 + i * 20}C118 ${46 + i * 20} 118 ${36 + i * 30} 150 ${36 + i * 30}`} />}
+        </g>
+      ))}
+      <text className="v-text" x="228" y="130" textAnchor="middle">not sure: left blank</text>
+      <text className="v-text" x="49" y="140" textAnchor="middle">profile</text>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -208,6 +226,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   gate: Gate,
   covenant: Covenant,
   meridian: Meridian,
+  praedos: Praedos,
 }
 
 export function Scene({ id }: { id: VisualId }) {

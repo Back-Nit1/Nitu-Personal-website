@@ -275,6 +275,7 @@ export const projects: AtlasNode[] = [
       'Legal and sensitive answers, such as work authorization, are never inferred from a résumé, and the extension never submits an application on its own.',
     ],
     flow: ['Scan', 'Map', 'Resolve', 'Policy', 'Fill'],
+    visual: 'praedos',
     screens: [
       {
         src: 'praedos/resume.png',
