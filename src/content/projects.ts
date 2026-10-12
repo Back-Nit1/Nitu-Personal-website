@@ -346,6 +346,7 @@ export const projects: AtlasNode[] = [
       'A chaos harness injects dropped writes, server errors, and timeouts, and the case timeline shows them as injected failures.',
       'After the loop, Sentinel reads Stripe, Salesforce, and Slack itself. A case is resolved only if every postcondition passes.',
     ],
+    links: [{ label: 'Live demo', url: 'https://sentinel-orpin-psi.vercel.app/' }],
     flow: ['Investigate', 'Decide', 'Act', 'Readback verify'],
     visual: 'gate',
     related: ['themis', 'cerno', 'covenant'],
