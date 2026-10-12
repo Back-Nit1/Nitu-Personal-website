@@ -439,6 +439,7 @@ export const projects: AtlasNode[] = [
       'Also planned: TanStack Query, SQLAlchemy, Alembic, and Playwright.',
     ],
     flow: ['Research', 'Estimate', 'Calibrate'],
+    visual: 'auspex',
     related: ['volleyball', 'rl'],
   },
   {

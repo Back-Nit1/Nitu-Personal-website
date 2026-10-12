@@ -284,6 +284,28 @@ function MacroLeague() {
   )
 }
 
+function Auspex() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="A probability line from zero to one with an estimate and its uncertainty range, compared against a market price marker">
+      <path className="v-line" d="M24 110H296" />
+      <path className="v-line" d="M24 104v12M296 104v12" />
+      <rect className="v-soft" x="108" y="98" width="104" height="24" rx="6" />
+      <circle className="v-fill" cx="152" cy="110" r="6" />
+      <path className="v-line dashed" d="M226 44V122" />
+      <circle className="v-ring" cx="226" cy="44" r="6" />
+      <path className="v-link" d="M152 76H226" />
+      <path className="v-link" d="M152 71v10M226 71v10" />
+      <g className="v-text">
+        <text x="24" y="136" textAnchor="middle">0</text>
+        <text x="296" y="136" textAnchor="middle">1</text>
+        <text x="160" y="152" textAnchor="middle">estimate with its uncertainty</text>
+        <text x="226" y="28" textAnchor="middle">market</text>
+        <text x="189" y="66" textAnchor="middle">compare</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -297,6 +319,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   cerno: Cerno,
   sentinel: Sentinel,
   macroleague: MacroLeague,
+  auspex: Auspex,
 }
 
 export function Scene({ id }: { id: VisualId }) {
