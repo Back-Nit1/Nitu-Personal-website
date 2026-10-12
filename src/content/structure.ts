@@ -17,7 +17,7 @@ export const structure: AtlasNode[] = [
     eyebrow: 'How I got here',
     lead: 'I build software: full stack products, applied ML, and agents.',
     body: [
-      'I started out premed and moved into engineering after building my first startup. I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
+      'I started out premed and moved into engineering after building my first startup, with night shifts at Penn Medicine and shadowing at RWJ along the way. I’m studying computer science alongside cell biology and neuroscience. Patient care and lab work are part of how I got here, and they still shape what I choose to build.',
     ],
   },
   {
@@ -26,9 +26,9 @@ export const structure: AtlasNode[] = [
     title: 'Experience',
     parent: 'root',
     eyebrow: 'Where I’ve worked',
-    lead: 'Software engineering, applied AI, and product work, with clinical shadowing alongside it.',
+    lead: 'Software engineering, applied AI, and product work.',
     body: [
-      'Most of it is engineering: a production mobile client, an AI game design prototype, clinical note extraction, and two companies I helped start. I also shadowed a urologist at RWJ.',
+      'Most of it is engineering: a production mobile client, an AI game design prototype, clinical note extraction, and two companies I helped start.',
     ],
   },
   {

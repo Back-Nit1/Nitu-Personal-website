@@ -50,6 +50,21 @@ export const entries: AtlasNode[] = [
     note: 'Moved from Experience to My story at Nitu’s request, Oct 2026. No dates supplied.',
   },
   {
+    id: 'shadowing',
+    kind: 'entry',
+    title: 'Shadowing at RWJ',
+    parent: 'story',
+    eyebrow: 'Clinical exposure / Shadowing',
+    lead: 'Seeing how bladder tumors are treated, up close.',
+    body: [
+      'I shadowed Dr. Saum Ghoudhoussipour at Robert Wood Johnson, an oncologist and urologist.',
+      'I learned about the robotic surgeries used to destroy tumors in the bladder, and about the drugs and therapies used to do the same.',
+    ],
+    tags: ['Shadowing', 'Oncology', 'Urology', 'Robotic surgery'],
+    related: ['penn', 'pivot'],
+    note: 'Physician name spelled as supplied by Nitu; confirm spelling. No dates or hours supplied. Moved from Experience to My story at Nitu’s request, Oct 2026.',
+  },
+  {
     id: 'origin',
     kind: 'entry',
     title: 'The origin',
@@ -143,22 +158,6 @@ export const entries: AtlasNode[] = [
     tags: ['Events', 'Mentor outreach', 'Founder community'],
     related: ['kairos', 'outreach'],
   },
-  {
-    id: 'shadowing',
-    kind: 'entry',
-    title: 'Shadowing at RWJ',
-    parent: 'experience',
-    eyebrow: 'Clinical exposure / Shadowing',
-    lead: 'Seeing how bladder tumors are treated, up close.',
-    body: [
-      'I shadowed Dr. Saum Ghoudhoussipour at Robert Wood Johnson, an oncologist and urologist.',
-      'I learned about the robotic surgeries used to destroy tumors in the bladder, and about the drugs and therapies used to do the same.',
-    ],
-    tags: ['Shadowing', 'Oncology', 'Urology', 'Robotic surgery'],
-    related: ['penn'],
-    note: 'Physician name spelled as supplied by Nitu; confirm spelling. No dates or hours supplied.',
-  },
-
   // Research
   {
     id: 'rl',
