@@ -315,6 +315,7 @@ export const projects: AtlasNode[] = [
       'Around it: Pydantic, SQLite, JSONL, Vite, TypeScript, Tailwind, shadcn, pytest, Vitest, and Ruff.',
     ],
     flow: ['Intent', 'Agent actions', 'Git changes', 'Runtime evidence'],
+    visual: 'cerno',
     related: ['praedos', 'themis'],
     note: 'Source: Cerno README. Separate implemented capabilities from planned components.',
   },

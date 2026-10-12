@@ -217,6 +217,28 @@ function Praedos() {
   )
 }
 
+function Cerno() {
+  return (
+    <svg viewBox="0 0 320 160" role="img" aria-label="Intent, then the changes in a diff, then evidence from tests; a model's opinion above is crossed out because it is not proof">
+      <rect className="v-node" x="14" y="44" width="72" height="68" rx="6" />
+      {range(3).map((i) => <rect key={i} className="v-soft" x="24" y={56 + i * 16} width={i === 1 ? 36 : 52} height="7" rx="3" />)}
+      <rect className="v-node" x="124" y="44" width="72" height="68" rx="6" />
+      {range(4).map((i) => <rect key={i} className={i === 1 || i === 2 ? 'v-fill' : 'v-soft'} x="134" y={54 + i * 13} width={[48, 36, 44, 30][i]} height="6" rx="3" />)}
+      <rect className="v-node" x="234" y="44" width="72" height="68" rx="6" />
+      <path className="v-route" d="M256 80l9 10 17-22" />
+      <path className="v-link" d="M86 78H124M196 78H234" />
+      <rect className="v-line dashed" x="234" y="6" width="72" height="22" rx="9" />
+      <text className="v-tiny" x="270" y="20" textAnchor="middle">model says ok</text>
+      <path className="v-line" d="M238 17H302" />
+      <g className="v-text">
+        <text x="50" y="136" textAnchor="middle">intent</text>
+        <text x="160" y="136" textAnchor="middle">changes</text>
+        <text x="270" y="136" textAnchor="middle">evidence</text>
+      </g>
+    </svg>
+  )
+}
+
 const scenes: Record<VisualId, () => ReactNode> = {
   nomos: Nomos,
   naigos: Naigos,
@@ -227,6 +249,7 @@ const scenes: Record<VisualId, () => ReactNode> = {
   covenant: Covenant,
   meridian: Meridian,
   praedos: Praedos,
+  cerno: Cerno,
 }
 
 export function Scene({ id }: { id: VisualId }) {
