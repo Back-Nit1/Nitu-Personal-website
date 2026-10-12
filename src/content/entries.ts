@@ -290,6 +290,6 @@ export const entries: AtlasNode[] = [
       'Naming is a small creative thread running through the projects.',
     ],
     tags: ['Mythology', 'Language', 'Project names'],
-    related: ['nomos', 'kairos', 'themis'],
+    related: ['nomos', 'kairos', 'themis', 'outreach'],
   },
 ]
