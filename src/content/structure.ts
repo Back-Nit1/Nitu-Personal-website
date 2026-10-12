@@ -74,7 +74,6 @@ export const structure: AtlasNode[] = [
       'I’m most useful where software meets healthcare, learning, or machine learning: early products, research tooling, simulation environments, and agents that have to prove what they did.',
       'I’m based in the New Jersey and New York City area, studying at Rutgers New Brunswick.',
     ],
-    related: ['founding', 'reliability', 'rl'],
   },
 
   {
